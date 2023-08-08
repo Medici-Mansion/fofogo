@@ -22,13 +22,13 @@ yarn dlx @yarnpkg/sdks vscode
 
 ## 커밋 컨벤션
 ```html
-🎨feat : 기능 추가 및 개선
-🐛fix : 오류 수정
-💄style : 코드의 수정이 없는 문자포멧팅
-🧪test : 코드 및 기능 테스트
-♻️refactor : 기존 코드를 수정한 코드정리
-🗑️cleanup : 기존 코드를 수정하지 않은 코드정리
-🚧chore : 환경설정 및 프로젝트 세팅
+🎨 feat : 기능 추가 및 개선
+🐛 fix : 오류 수정
+💄 style : 코드의 수정이 없는 문자포멧팅
+🧪 test : 코드 및 기능 테스트
+♻️ refactor : 기존 코드를 수정한 코드정리
+🗑️ cleanup : 기존 코드를 수정하지 않은 코드정리
+🚧 chore : 환경설정 및 프로젝트 세팅
 
 <type>(<scope>): <subject> - Subject line
 <BLANK LINE> - 줄 바꿈으로 구분한다
