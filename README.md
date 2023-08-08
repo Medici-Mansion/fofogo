@@ -17,7 +17,7 @@ yarn dlx @yarnpkg/sdks vscode
 
 ## 브런치 전략
 
-![branch_strategy](https://github-production-user-asset-6210df.s3.amazonaws.com/73725736/237285171-6f25b189-1269-46fa-bf11-e27adab40b75.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20230510%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230510T051712Z&X-Amz-Expires=300&X-Amz-Signature=76a83661bc9ad2c4e09404195f5ec8a33d7d902abf09c3c0e7a58a4eacc1ba08&X-Amz-SignedHeaders=host&actor_id=73725736&key_id=0&repo_id=638101956)
+![git_strategy](https://github.com/fourfourgo/fourfour-go/assets/73725736/5715bd46-e503-47da-9155-b597d82dd683)
 
 
 ## 커밋 컨벤션
