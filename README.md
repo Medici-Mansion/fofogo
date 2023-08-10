@@ -63,37 +63,26 @@ See also: #3, #4 <!-- 참고 이슈번호 -->
 
 
 ## 팀원 및 역할
-<!-- 
+
 <table>
-    <th width="33%" style="text-align:center"><a href="https://github.com/suhyun22" target="_blank">김수현</th>
     <th width="33%" style="text-align:center"><a href="https://github.com/raymondanythings" target="_blank">엽용현</a></th>
-    <th width="33%" style="text-align:center"><a href="https://github.com/goodafteryoon" target="_blank">최윤나</a></th>
+    <th width="33%" style="text-align:center"><a href="https://github.com/LeeBonHoon1" target="_blank">이본훈</a></th>
     <tr>
-        <td>
-            <img src="https://user-images.githubusercontent.com/106373580/233285631-99f54808-2c23-4b32-909c-c66e1b0759a6.png"/>
-        </td>
         <td>
             <img src="https://user-images.githubusercontent.com/106373580/233285947-61926021-db9d-4f2b-8b7b-e5ef37c8d686.png"/>
         </td>
-        <td>
+        <!-- <td>
             <img src="https://user-images.githubusercontent.com/106373580/233285807-ea297fe2-d6b3-4539-b7a3-fd7c96b3408c.png"/>
-        </td>
+        </td> -->
     </tr>
     <tr>
         <td>
-            <strong>UX/UI <br> Designer</strong>
+            <strong>Data based <br />Front-end <br> Developer</strong>
         </td>
         <td>
-            <strong>Front-end <br> Developer</strong>
-        </td>
-        <td>
-            <strong>Front-end <br> Developer</strong>
+            <strong>UI based <br />Front-end <br> Developer</strong>
         </td>
     </tr>
 </table>
 
 <br>
-
-
-
- -->
