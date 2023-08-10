@@ -62,6 +62,7 @@ See also: #3, #4 <!-- 참고 이슈번호 -->
   - https://clerk.com/docs/nextjs/get-started-with-nextjs
 
 
+
 ## 팀원 및 역할
 
 <table>
@@ -71,9 +72,9 @@ See also: #3, #4 <!-- 참고 이슈번호 -->
         <td>
             <img src="https://user-images.githubusercontent.com/106373580/233285947-61926021-db9d-4f2b-8b7b-e5ef37c8d686.png"/>
         </td>
-        <!-- <td>
-            <img src="https://user-images.githubusercontent.com/106373580/233285807-ea297fe2-d6b3-4539-b7a3-fd7c96b3408c.png"/>
-        </td> -->
+        <td>
+            <img src="https://github.com/fourfourgo/fourfour-go/assets/73725736/5be49b39-9a38-4f1a-bf0a-01dca0b31050.png"/>
+        </td>
     </tr>
     <tr>
         <td>
