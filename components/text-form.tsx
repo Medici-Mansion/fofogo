@@ -18,17 +18,20 @@ import {
 import { useToast } from '@/components/ui/use-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useEffect, useState } from 'react'
 import { Textarea } from '@/components/ui/textarea'
 import * as LucideIcons from 'lucide-react'
+import ChatTexts from './chat-texts'
 
 const formSchema = z.object({
-  text: z.string().min(1, {
-    message: '번역할 단어, 문장을 입력해주세요!',
+  userText: z.string().min(1, {
+    message: '텍스트를 입력해주세요!',
   }),
-  country: z.string().min(1, {
-    message: '번역할 국가를 선택해주세요!',
+  userLanguage: z.string().min(1, {
+    message: 'ㅎㅎ',
+  }),
+  changelanguage: z.string().min(1, {
+    message: 'ㅎㅎ1',
   }),
 })
 
@@ -53,26 +56,38 @@ const value: any = [
 
 const TextForm = () => {
   const [isLoading, setIsLoading] = useState(false)
+
   const { toast } = useToast()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      text: '',
-      country: '',
+      userLanguage: '',
+      changelanguage: '',
+      userText: '',
     },
   })
+
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setFakeLoading(false)
+  //   }, 1000)
+
+  //   return () => {
+  //     clearTimeout(timeout)
+  //   }
+  // }, [])
 
   const onSubmit = async () => {
     console.log('submit!')
   }
 
   return (
-    <div className="absolute top-16 w-[100%] mt-2">
+    <div className="pt-16 w-full mt-2 h-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
           <div className="grid grid-cols-2 gap-4 px-2">
             <FormField
-              name="country"
+              name="userLanguage"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -104,7 +119,7 @@ const TextForm = () => {
               )}
             />
             <FormField
-              name="country"
+              name="changelanguage"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -136,47 +151,33 @@ const TextForm = () => {
               )}
             />
           </div>
-          <div className="flex flex-col space-y-3 px-2 mt-3">
-            <FormField
-              name="text"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      className="bg-background resize-none"
-                      rows={12}
-                      disabled={isLoading}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="text"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      className="bg-background resize-none"
-                      rows={12}
-                      disabled={isLoading}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <div className="flex flex-col h-full">
+            <ChatTexts />
+            <div className="p-2 bottom-2 w-full">
+              <FormField
+                name="userText"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        rows={4}
+                        disabled={isLoading}
+                        {...field}
+                        className="resize-none"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
         </form>
       </Form>
-      <div className="w-full flex items-center justify-center mt-3">
+      {/* <div className="w-full flex items-center justify-center mt-3">
         <LucideIcons.Circle className="w-12 h-12" />
-      </div>
+      </div> */}
     </div>
   )
 }
