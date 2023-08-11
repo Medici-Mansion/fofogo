@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import ThemeProvider from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,8 +18,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="ko" suppressHydrationWarning>
         <body>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>
