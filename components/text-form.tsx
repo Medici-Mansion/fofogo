@@ -18,7 +18,7 @@ import {
 import { useToast } from '@/components/ui/use-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Textarea } from '@/components/ui/textarea'
 import * as LucideIcons from 'lucide-react'
 import ChatTexts from './chat-texts'
@@ -57,7 +57,6 @@ const value: any = [
 const TextForm = () => {
   const [isLoading, setIsLoading] = useState(false)
 
-  const { toast } = useToast()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -66,16 +65,6 @@ const TextForm = () => {
       userText: '',
     },
   })
-
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setFakeLoading(false)
-  //   }, 1000)
-
-  //   return () => {
-  //     clearTimeout(timeout)
-  //   }
-  // }, [])
 
   const onSubmit = async () => {
     console.log('submit!')
@@ -175,9 +164,6 @@ const TextForm = () => {
           </div>
         </form>
       </Form>
-      {/* <div className="w-full flex items-center justify-center mt-3">
-        <LucideIcons.Circle className="w-12 h-12" />
-      </div> */}
     </div>
   )
 }
