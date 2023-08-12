@@ -34,7 +34,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const validation = TranslateTextValidation.POST.safeParse(req.body)
+  const body = await req.json()
   const { userId } = auth()
   if (!userId) {
     return NextResponse.json(
@@ -48,6 +48,7 @@ export async function POST(req: NextRequest) {
       }
     )
   }
+  const validation = TranslateTextValidation.POST.safeParse(body)
   if (!validation.success) {
     return NextResponse.json(
       handler({
