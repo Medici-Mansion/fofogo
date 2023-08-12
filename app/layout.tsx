@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import ThemeProvider from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
+import { QueryProvider } from '@/components/query-provider'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,8 +20,10 @@ export default function RootLayout({
       <html lang="ko" suppressHydrationWarning>
         <body>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            {children}
-            <Toaster />
+            <QueryProvider>
+              {children}
+              <Toaster />
+            </QueryProvider>
           </ThemeProvider>
         </body>
       </html>
