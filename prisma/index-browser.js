@@ -127,6 +127,15 @@ exports.Prisma.LanguageScalarFieldEnum = {
   name: 'name'
 };
 
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -136,10 +145,14 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.Role = exports.$Enums.Role = {
+  user: 'user',
+  system: 'system'
+};
 
 exports.Prisma.ModelName = {
-  Language: 'Language'
+  Language: 'Language',
+  Message: 'Message'
 };
 
 /**
