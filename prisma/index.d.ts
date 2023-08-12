@@ -949,6 +949,39 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type LanguageCountOutputType
+   */
+
+  export type LanguageCountOutputType = {
+    Message: number
+  }
+
+  export type LanguageCountOutputTypeSelect<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+    Message?: boolean | LanguageCountOutputTypeCountMessageArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * LanguageCountOutputType without action
+   */
+  export type LanguageCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageCountOutputType
+     */
+    select?: LanguageCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * LanguageCountOutputType without action
+   */
+  export type LanguageCountOutputTypeCountMessageArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+    where?: MessageWhereInput
+  }
+
+
 
   /**
    * Models
@@ -1102,6 +1135,8 @@ export namespace Prisma {
     id?: boolean
     code?: boolean
     name?: boolean
+    Message?: boolean | Language$MessageArgs<ExtArgs>
+    _count?: boolean | LanguageCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["language"]>
 
   export type LanguageSelectScalar = {
@@ -1110,10 +1145,17 @@ export namespace Prisma {
     name?: boolean
   }
 
+  export type LanguageInclude<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+    Message?: boolean | Language$MessageArgs<ExtArgs>
+    _count?: boolean | LanguageCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
 
   export type $LanguagePayload<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
     name: "Language"
-    objects: {}
+    objects: {
+      Message: Prisma.$MessagePayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetResult<{
       id: string
       code: string
@@ -1483,6 +1525,7 @@ export namespace Prisma {
   export interface Prisma__LanguageClient<T, Null = never, ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    Message<T extends Language$MessageArgs<ExtArgs> = {}>(args?: Subset<T, Language$MessageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1529,6 +1572,10 @@ export namespace Prisma {
      */
     select?: LanguageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
      * Filter, which Language to fetch.
      */
     where: LanguageWhereUniqueInput
@@ -1544,6 +1591,10 @@ export namespace Prisma {
      */
     select?: LanguageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
      * Filter, which Language to fetch.
      */
     where: LanguageWhereUniqueInput
@@ -1558,6 +1609,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Language
      */
     select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
     /**
      * Filter, which Language to fetch.
      */
@@ -1604,6 +1659,10 @@ export namespace Prisma {
      */
     select?: LanguageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
      * Filter, which Language to fetch.
      */
     where?: LanguageWhereInput
@@ -1649,6 +1708,10 @@ export namespace Prisma {
      */
     select?: LanguageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
      * Filter, which Languages to fetch.
      */
     where?: LanguageWhereInput
@@ -1689,6 +1752,10 @@ export namespace Prisma {
      */
     select?: LanguageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
      * The data needed to create a Language.
      */
     data: XOR<LanguageCreateInput, LanguageUncheckedCreateInput>
@@ -1715,6 +1782,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Language
      */
     select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
     /**
      * The data needed to update a Language.
      */
@@ -1750,6 +1821,10 @@ export namespace Prisma {
      */
     select?: LanguageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
      * The filter to search for the Language to update in case it exists.
      */
     where: LanguageWhereUniqueInput
@@ -1773,6 +1848,10 @@ export namespace Prisma {
      */
     select?: LanguageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
      * Filter which Language to delete.
      */
     where: LanguageWhereUniqueInput
@@ -1791,6 +1870,27 @@ export namespace Prisma {
 
 
   /**
+   * Language.Message
+   */
+  export type Language$MessageArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
+    where?: MessageWhereInput
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    cursor?: MessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+
+  /**
    * Language without action
    */
   export type LanguageDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
@@ -1798,6 +1898,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Language
      */
     select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LanguageInclude<ExtArgs> | null
   }
 
 
@@ -1819,6 +1923,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
+    languageId: string | null
   }
 
   export type MessageMaxAggregateOutputType = {
@@ -1828,6 +1933,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
+    languageId: string | null
   }
 
   export type MessageCountAggregateOutputType = {
@@ -1837,6 +1943,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     userId: number
+    languageId: number
     _all: number
   }
 
@@ -1848,6 +1955,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     userId?: true
+    languageId?: true
   }
 
   export type MessageMaxAggregateInputType = {
@@ -1857,6 +1965,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     userId?: true
+    languageId?: true
   }
 
   export type MessageCountAggregateInputType = {
@@ -1866,6 +1975,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     userId?: true
+    languageId?: true
     _all?: true
   }
 
@@ -1948,6 +2058,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     userId: string
+    languageId: string
     _count: MessageCountAggregateOutputType | null
     _min: MessageMinAggregateOutputType | null
     _max: MessageMaxAggregateOutputType | null
@@ -1974,6 +2085,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
+    languageId?: boolean
+    language?: boolean | LanguageDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectScalar = {
@@ -1983,12 +2096,19 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
+    languageId?: boolean
+  }
+
+  export type MessageInclude<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+    language?: boolean | LanguageDefaultArgs<ExtArgs>
   }
 
 
   export type $MessagePayload<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
     name: "Message"
-    objects: {}
+    objects: {
+      language: Prisma.$LanguagePayload<ExtArgs>
+    }
     scalars: $Extensions.GetResult<{
       id: string
       role: $Enums.Role
@@ -1996,6 +2116,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       userId: string
+      languageId: string
     }, ExtArgs["result"]["message"]>
     composites: {}
   }
@@ -2361,6 +2482,7 @@ export namespace Prisma {
   export interface Prisma__MessageClient<T, Null = never, ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    language<T extends LanguageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LanguageDefaultArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2396,6 +2518,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Message", 'DateTime'>
     readonly updatedAt: FieldRef<"Message", 'DateTime'>
     readonly userId: FieldRef<"Message", 'String'>
+    readonly languageId: FieldRef<"Message", 'String'>
   }
     
 
@@ -2409,6 +2532,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Message
      */
     select?: MessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
     /**
      * Filter, which Message to fetch.
      */
@@ -2425,6 +2552,10 @@ export namespace Prisma {
      */
     select?: MessageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
      * Filter, which Message to fetch.
      */
     where: MessageWhereUniqueInput
@@ -2439,6 +2570,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Message
      */
     select?: MessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
     /**
      * Filter, which Message to fetch.
      */
@@ -2485,6 +2620,10 @@ export namespace Prisma {
      */
     select?: MessageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
      * Filter, which Message to fetch.
      */
     where?: MessageWhereInput
@@ -2530,6 +2669,10 @@ export namespace Prisma {
      */
     select?: MessageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
      * Filter, which Messages to fetch.
      */
     where?: MessageWhereInput
@@ -2570,6 +2713,10 @@ export namespace Prisma {
      */
     select?: MessageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
      * The data needed to create a Message.
      */
     data: XOR<MessageCreateInput, MessageUncheckedCreateInput>
@@ -2596,6 +2743,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Message
      */
     select?: MessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
     /**
      * The data needed to update a Message.
      */
@@ -2631,6 +2782,10 @@ export namespace Prisma {
      */
     select?: MessageSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
      * The filter to search for the Message to update in case it exists.
      */
     where: MessageWhereUniqueInput
@@ -2653,6 +2808,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Message
      */
     select?: MessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
     /**
      * Filter which Message to delete.
      */
@@ -2679,6 +2838,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Message
      */
     select?: MessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MessageInclude<ExtArgs> | null
   }
 
 
@@ -2712,7 +2875,8 @@ export namespace Prisma {
     content: 'content',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    userId: 'userId'
+    userId: 'userId',
+    languageId: 'languageId'
   };
 
   export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
@@ -2805,12 +2969,14 @@ export namespace Prisma {
     id?: StringFilter<"Language"> | string
     code?: StringFilter<"Language"> | string
     name?: StringFilter<"Language"> | string
+    Message?: MessageListRelationFilter
   }
 
   export type LanguageOrderByWithRelationInput = {
     id?: SortOrder
     code?: SortOrder
     name?: SortOrder
+    Message?: MessageOrderByRelationAggregateInput
   }
 
   export type LanguageWhereUniqueInput = Prisma.AtLeast<{
@@ -2820,6 +2986,7 @@ export namespace Prisma {
     OR?: LanguageWhereInput[]
     NOT?: LanguageWhereInput | LanguageWhereInput[]
     name?: StringFilter<"Language"> | string
+    Message?: MessageListRelationFilter
   }, "id" | "code">
 
   export type LanguageOrderByWithAggregationInput = {
@@ -2850,6 +3017,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Message"> | Date | string
     updatedAt?: DateTimeFilter<"Message"> | Date | string
     userId?: StringFilter<"Message"> | string
+    languageId?: StringFilter<"Message"> | string
+    language?: XOR<LanguageRelationFilter, LanguageWhereInput>
   }
 
   export type MessageOrderByWithRelationInput = {
@@ -2859,6 +3028,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
+    languageId?: SortOrder
+    language?: LanguageOrderByWithRelationInput
   }
 
   export type MessageWhereUniqueInput = Prisma.AtLeast<{
@@ -2871,6 +3042,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Message"> | Date | string
     updatedAt?: DateTimeFilter<"Message"> | Date | string
     userId?: StringFilter<"Message"> | string
+    languageId?: StringFilter<"Message"> | string
+    language?: XOR<LanguageRelationFilter, LanguageWhereInput>
   }, "id">
 
   export type MessageOrderByWithAggregationInput = {
@@ -2880,6 +3053,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
+    languageId?: SortOrder
     _count?: MessageCountOrderByAggregateInput
     _max?: MessageMaxOrderByAggregateInput
     _min?: MessageMinOrderByAggregateInput
@@ -2895,30 +3069,35 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
     userId?: StringWithAggregatesFilter<"Message"> | string
+    languageId?: StringWithAggregatesFilter<"Message"> | string
   }
 
   export type LanguageCreateInput = {
     id?: string
     code: string
     name: string
+    Message?: MessageCreateNestedManyWithoutLanguageInput
   }
 
   export type LanguageUncheckedCreateInput = {
     id?: string
     code: string
     name: string
+    Message?: MessageUncheckedCreateNestedManyWithoutLanguageInput
   }
 
   export type LanguageUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    Message?: MessageUpdateManyWithoutLanguageNestedInput
   }
 
   export type LanguageUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    Message?: MessageUncheckedUpdateManyWithoutLanguageNestedInput
   }
 
   export type LanguageCreateManyInput = {
@@ -2946,6 +3125,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
+    language: LanguageCreateNestedOneWithoutMessageInput
   }
 
   export type MessageUncheckedCreateInput = {
@@ -2955,6 +3135,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
+    languageId: string
   }
 
   export type MessageUpdateInput = {
@@ -2964,6 +3145,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    language?: LanguageUpdateOneRequiredWithoutMessageNestedInput
   }
 
   export type MessageUncheckedUpdateInput = {
@@ -2973,6 +3155,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    languageId?: StringFieldUpdateOperationsInput | string
   }
 
   export type MessageCreateManyInput = {
@@ -2982,6 +3165,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
+    languageId: string
   }
 
   export type MessageUpdateManyMutationInput = {
@@ -3000,6 +3184,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    languageId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3015,6 +3200,16 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type MessageListRelationFilter = {
+    every?: MessageWhereInput
+    some?: MessageWhereInput
+    none?: MessageWhereInput
+  }
+
+  export type MessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type LanguageCountOrderByAggregateInput = {
@@ -3071,6 +3266,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type LanguageRelationFilter = {
+    is?: LanguageWhereInput
+    isNot?: LanguageWhereInput
+  }
+
   export type MessageCountOrderByAggregateInput = {
     id?: SortOrder
     role?: SortOrder
@@ -3078,6 +3278,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
+    languageId?: SortOrder
   }
 
   export type MessageMaxOrderByAggregateInput = {
@@ -3087,6 +3288,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
+    languageId?: SortOrder
   }
 
   export type MessageMinOrderByAggregateInput = {
@@ -3096,6 +3298,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
+    languageId?: SortOrder
   }
 
   export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -3122,8 +3325,56 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type MessageCreateNestedManyWithoutLanguageInput = {
+    create?: XOR<MessageCreateWithoutLanguageInput, MessageUncheckedCreateWithoutLanguageInput> | MessageCreateWithoutLanguageInput[] | MessageUncheckedCreateWithoutLanguageInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutLanguageInput | MessageCreateOrConnectWithoutLanguageInput[]
+    createMany?: MessageCreateManyLanguageInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
+  export type MessageUncheckedCreateNestedManyWithoutLanguageInput = {
+    create?: XOR<MessageCreateWithoutLanguageInput, MessageUncheckedCreateWithoutLanguageInput> | MessageCreateWithoutLanguageInput[] | MessageUncheckedCreateWithoutLanguageInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutLanguageInput | MessageCreateOrConnectWithoutLanguageInput[]
+    createMany?: MessageCreateManyLanguageInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type MessageUpdateManyWithoutLanguageNestedInput = {
+    create?: XOR<MessageCreateWithoutLanguageInput, MessageUncheckedCreateWithoutLanguageInput> | MessageCreateWithoutLanguageInput[] | MessageUncheckedCreateWithoutLanguageInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutLanguageInput | MessageCreateOrConnectWithoutLanguageInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutLanguageInput | MessageUpsertWithWhereUniqueWithoutLanguageInput[]
+    createMany?: MessageCreateManyLanguageInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutLanguageInput | MessageUpdateWithWhereUniqueWithoutLanguageInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutLanguageInput | MessageUpdateManyWithWhereWithoutLanguageInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
+  export type MessageUncheckedUpdateManyWithoutLanguageNestedInput = {
+    create?: XOR<MessageCreateWithoutLanguageInput, MessageUncheckedCreateWithoutLanguageInput> | MessageCreateWithoutLanguageInput[] | MessageUncheckedCreateWithoutLanguageInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutLanguageInput | MessageCreateOrConnectWithoutLanguageInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutLanguageInput | MessageUpsertWithWhereUniqueWithoutLanguageInput[]
+    createMany?: MessageCreateManyLanguageInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutLanguageInput | MessageUpdateWithWhereUniqueWithoutLanguageInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutLanguageInput | MessageUpdateManyWithWhereWithoutLanguageInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
+  export type LanguageCreateNestedOneWithoutMessageInput = {
+    create?: XOR<LanguageCreateWithoutMessageInput, LanguageUncheckedCreateWithoutMessageInput>
+    connectOrCreate?: LanguageCreateOrConnectWithoutMessageInput
+    connect?: LanguageWhereUniqueInput
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -3132,6 +3383,14 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type LanguageUpdateOneRequiredWithoutMessageNestedInput = {
+    create?: XOR<LanguageCreateWithoutMessageInput, LanguageUncheckedCreateWithoutMessageInput>
+    connectOrCreate?: LanguageCreateOrConnectWithoutMessageInput
+    upsert?: LanguageUpsertWithoutMessageInput
+    connect?: LanguageWhereUniqueInput
+    update?: XOR<XOR<LanguageUpdateToOneWithWhereWithoutMessageInput, LanguageUpdateWithoutMessageInput>, LanguageUncheckedUpdateWithoutMessageInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -3216,6 +3475,139 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type MessageCreateWithoutLanguageInput = {
+    id?: string
+    role: $Enums.Role
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type MessageUncheckedCreateWithoutLanguageInput = {
+    id?: string
+    role: $Enums.Role
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type MessageCreateOrConnectWithoutLanguageInput = {
+    where: MessageWhereUniqueInput
+    create: XOR<MessageCreateWithoutLanguageInput, MessageUncheckedCreateWithoutLanguageInput>
+  }
+
+  export type MessageCreateManyLanguageInputEnvelope = {
+    data: MessageCreateManyLanguageInput | MessageCreateManyLanguageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MessageUpsertWithWhereUniqueWithoutLanguageInput = {
+    where: MessageWhereUniqueInput
+    update: XOR<MessageUpdateWithoutLanguageInput, MessageUncheckedUpdateWithoutLanguageInput>
+    create: XOR<MessageCreateWithoutLanguageInput, MessageUncheckedCreateWithoutLanguageInput>
+  }
+
+  export type MessageUpdateWithWhereUniqueWithoutLanguageInput = {
+    where: MessageWhereUniqueInput
+    data: XOR<MessageUpdateWithoutLanguageInput, MessageUncheckedUpdateWithoutLanguageInput>
+  }
+
+  export type MessageUpdateManyWithWhereWithoutLanguageInput = {
+    where: MessageScalarWhereInput
+    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutLanguageInput>
+  }
+
+  export type MessageScalarWhereInput = {
+    AND?: MessageScalarWhereInput | MessageScalarWhereInput[]
+    OR?: MessageScalarWhereInput[]
+    NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
+    id?: StringFilter<"Message"> | string
+    role?: EnumRoleFilter<"Message"> | $Enums.Role
+    content?: StringFilter<"Message"> | string
+    createdAt?: DateTimeFilter<"Message"> | Date | string
+    updatedAt?: DateTimeFilter<"Message"> | Date | string
+    userId?: StringFilter<"Message"> | string
+    languageId?: StringFilter<"Message"> | string
+  }
+
+  export type LanguageCreateWithoutMessageInput = {
+    id?: string
+    code: string
+    name: string
+  }
+
+  export type LanguageUncheckedCreateWithoutMessageInput = {
+    id?: string
+    code: string
+    name: string
+  }
+
+  export type LanguageCreateOrConnectWithoutMessageInput = {
+    where: LanguageWhereUniqueInput
+    create: XOR<LanguageCreateWithoutMessageInput, LanguageUncheckedCreateWithoutMessageInput>
+  }
+
+  export type LanguageUpsertWithoutMessageInput = {
+    update: XOR<LanguageUpdateWithoutMessageInput, LanguageUncheckedUpdateWithoutMessageInput>
+    create: XOR<LanguageCreateWithoutMessageInput, LanguageUncheckedCreateWithoutMessageInput>
+    where?: LanguageWhereInput
+  }
+
+  export type LanguageUpdateToOneWithWhereWithoutMessageInput = {
+    where?: LanguageWhereInput
+    data: XOR<LanguageUpdateWithoutMessageInput, LanguageUncheckedUpdateWithoutMessageInput>
+  }
+
+  export type LanguageUpdateWithoutMessageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LanguageUncheckedUpdateWithoutMessageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MessageCreateManyLanguageInput = {
+    id?: string
+    role: $Enums.Role
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type MessageUpdateWithoutLanguageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MessageUncheckedUpdateWithoutLanguageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MessageUncheckedUpdateManyWithoutLanguageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
 
