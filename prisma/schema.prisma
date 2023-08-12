@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "./"
 }
 
 datasource db {
@@ -10,5 +11,19 @@ datasource db {
 model Language {
   id   String @id @default(uuid())
   code String @unique
-  name String 
+  name String
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  role      Role
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+}
+
+enum Role {
+  user
+  system
 }
