@@ -6,16 +6,26 @@ type QueryMethod = UseQueryOptions<unknown, unknown, unknown, QueryKey>
 type MutationOptions<T> = UseMutationOptions<unknown, unknown, T, unknown>
 
 
+
 const TranslateApi = {
-  getCountryCode: {
-    queryKey: ['contry-code'],
-    queryFn: async () => {
-      const result = await axios.get('/api/translate/code-list')
-      return result.data
-    },
-    cacheTime: 1000,
-    staleTime: 1000,
-  } satisfies QueryMethod,
+  queries: {
+    getCountryCode: {
+      queryKey: ['contry-code'],
+      queryFn: async () => {
+        const result = await axios.get('/api/translate/code-list')
+        return result.data
+      },
+      cacheTime: 1000,
+      staleTime: 1000,
+    } satisfies QueryMethod,
+    getHistoryText: {
+      queryKey: ['history-text'],
+      queryFn: async () => {
+        const result = await axios.get('/api/translate/text')
+        return result.data
+      }
+    }
+  },
 
   mutations: {
     translateText: {

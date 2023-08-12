@@ -4,7 +4,7 @@ import TranslateApi from "@/APIs/translateApi";
 
 
 const useGetCountry = () => {
-  const { data, isLoading, error } = useQuery(TranslateApi.getCountryCode)
+  const { data, isLoading, error } = useQuery(TranslateApi.queries.getCountryCode)
 
   return {
     data, isLoading, error

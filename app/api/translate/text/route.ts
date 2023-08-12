@@ -25,7 +25,12 @@ export async function GET() {
     where: {
       userId,
     },
-    include: {
+    select: {
+      content: true,
+      createdAt: true,
+      id: true,
+      role: true,
+      updatedAt: true,
       language: true,
     },
     orderBy: {
@@ -77,7 +82,7 @@ export async function POST(req: NextRequest) {
       to,
     })
 
-    await prismadb.message.createMany({
+    const re = await prismadb.message.createMany({
       data: [
         {
           content: text,
