@@ -5,7 +5,7 @@ import ChatText from './chat-text'
 
 const ChatTexts = () => {
   return (
-    <div className="px-2 h-full overflow-y-auto pt-2">
+    <div className="h-full overflow-y-auto pt-2 border m-2">
       <ChatText />
     </div>
   )

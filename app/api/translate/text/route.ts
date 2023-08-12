@@ -4,7 +4,8 @@ import { v2 } from '@google-cloud/translate'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
-  const validation = TranslateTextValidation.POST.safeParse(req.body)
+  const body = await req.json()
+  const validation = TranslateTextValidation.POST.safeParse(body)
   if (!validation.success) {
     return NextResponse.json(
       handler({
