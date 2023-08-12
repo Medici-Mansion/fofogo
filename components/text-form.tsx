@@ -22,6 +22,7 @@ import { useState } from 'react'
 import { Textarea } from '@/components/ui/textarea'
 import * as LucideIcons from 'lucide-react'
 import ChatTexts from './chat-texts'
+import useGetCountry from '@/hooks/useGetCountry'
 
 const formSchema = z.object({
   userText: z.string().min(1, {
@@ -55,8 +56,9 @@ const value: any = [
 ]
 
 const TextForm = () => {
-  const [isLoading, setIsLoading] = useState(false)
-
+  const { data, error, isLoading } = useGetCountry()
+  console.log(data)
+  // const [isLoading, setIsLoading] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
