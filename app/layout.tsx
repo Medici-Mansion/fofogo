@@ -18,7 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="ko" suppressHydrationWarning>
+      <html
+        lang="ko"
+        className="overflow-y-hidden sm:overflow-y-auto"
+        suppressHydrationWarning
+      >
         <body>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <QueryProvider>

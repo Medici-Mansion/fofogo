@@ -2,9 +2,9 @@ import { PropsWithChildren } from 'react'
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="h-full flex flex-col">
-      <main className="h-full">{children}</main>
-    </div>
+    <main className="pt-nav-height sm:pt-0 h-[calc(100%-var(--nav-height))] sm:h-full">
+      {children}
+    </main>
   )
 }
 
