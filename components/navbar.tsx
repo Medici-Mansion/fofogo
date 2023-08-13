@@ -1,7 +1,6 @@
 'use client'
 
-import * as React from 'react'
-import * as LucideIcons from 'lucide-react'
+import { useLayoutEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Poppins } from 'next/font/google'
 import { UserButton, useUser } from '@clerk/nextjs'
@@ -17,8 +16,28 @@ const font = Poppins({
 
 export const Navbar = () => {
   const { isLoaded } = useUser()
+  const navRef = useRef<HTMLDivElement>(null)
+
+  const setStyleFromNavHeight = () => {
+    if (navRef.current) {
+      document.documentElement.style.setProperty(
+        '--nav-height',
+        navRef.current.offsetHeight + 'px'
+      )
+    }
+  }
+  useLayoutEffect(() => {
+    navRef.current?.addEventListener('resize', setStyleFromNavHeight)
+    setStyleFromNavHeight()
+    return () => {
+      navRef.current?.removeEventListener('resize', setStyleFromNavHeight)
+    }
+  }, [])
   return (
-    <div className="fixed w-full z-50 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-secondary h-16">
+    <nav
+      ref={navRef}
+      className="fixed w-full z-50 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-secondary h-16"
+    >
       <div className="flex items-center">
         <Image
           src={'/fofogo_symbol.png'}
@@ -42,7 +61,7 @@ export const Navbar = () => {
         <ModeToggle />
         {isLoaded ? <UserButton afterSignOutUrl="/" /> : <>Loading...</>}
       </div>
-    </div>
+    </nav>
   )
 }
 
