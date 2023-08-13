@@ -19,15 +19,12 @@ export const Navbar = () => {
   const navRef = useRef<HTMLDivElement>(null)
 
   const setStyleFromNavHeight = () => {
-    setTimeout(() => {
-      if (navRef.current) {
-        const nav = document.querySelector('nav')
-        document.documentElement.style.setProperty(
-          '--nav-height',
-          navRef.current.offsetHeight + 'px'
-        )
-      }
-    }, 100)
+    if (navRef.current) {
+      document.documentElement.style.setProperty(
+        '--nav-height',
+        navRef.current.offsetHeight + 'px'
+      )
+    }
   }
   useLayoutEffect(() => {
     navRef.current?.addEventListener('resize', setStyleFromNavHeight)
