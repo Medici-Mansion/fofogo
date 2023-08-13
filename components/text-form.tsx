@@ -28,13 +28,25 @@ import { useToast } from '@/components/ui/use-toast'
 import { useEffect } from 'react'
 import { Validation } from '@/validation/translate/text.validation'
 import useTranslateText from '@/hooks/use-translate-text'
-import TranslateApi from '@/APIs/translateApi'
+import useGetHistoryText from '@/hooks/use-history-text'
+import { useQueryClient } from 'react-query'
 
 const TextForm = () => {
   const { toast } = useToast()
-  const { data, error, isLoading } = useGetCountry()
+  const {
+    data: countryData,
+    error: countryError,
+    isLoading: countryLoading,
+  } = useGetCountry()
+  const {
+    data: historyData,
+    error: historyError,
+    isLoading: historyLoading,
+    key: historyKey,
+  } = useGetHistoryText()
   const { mutate } = useTranslateText()
   const debounce = useDebounceFn()
+  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof TranslateTextValidation.POST>>({
     resolver: zodResolver(TranslateTextValidation.POST),
     defaultValues: {
@@ -44,7 +56,23 @@ const TextForm = () => {
 
   const onSubmit = async (textFormValue: Validation<'POST'>) => {
     form.setValue('text', '')
-    mutate(textFormValue)
+    const newData = queryClient?.getQueryData(historyKey) as { data: [] }
+    queryClient.setQueryData(historyKey, {
+      ...newData,
+      data: [
+        ...newData.data,
+        {
+          content: textFormValue.text,
+          language: textFormValue.from,
+          role: 'user',
+          createdAt: new Date(),
+          id: new Date() + '',
+        },
+      ],
+    })
+
+    const result = mutate(textFormValue)
+    console.log(result)
   }
 
   useEffect(() => {
@@ -58,7 +86,7 @@ const TextForm = () => {
 
   return (
     <div className="pt-16 w-full mt-2 h-full">
-      {!isLoading ? (
+      {!countryLoading && !historyLoading ? (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
             <div className="grid grid-cols-2 gap-4 px-2">
@@ -69,7 +97,7 @@ const TextForm = () => {
                   <FormItem>
                     <FormLabel>to</FormLabel>
                     <Select
-                      disabled={isLoading}
+                      disabled={countryLoading}
                       onValueChange={field.onChange}
                       value={field.value}
                       defaultValue={field.value}
@@ -83,7 +111,7 @@ const TextForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="max-h-44 overflow-y-auto">
-                        {data?.data.map((country: any) => (
+                        {countryData?.data.map((country: any) => (
                           <SelectItem key={country.id} value={country.code}>
                             {country.name}
                           </SelectItem>
@@ -96,7 +124,7 @@ const TextForm = () => {
               />
             </div>
             <div className="flex flex-col h-full">
-              <ChatTexts />
+              <ChatTexts historyData={historyData} className="absolute" />
               <div className="p-2 bottom-2 w-full flex items-center">
                 <FormField
                   name="text"
@@ -106,24 +134,18 @@ const TextForm = () => {
                       <FormControl>
                         <Textarea
                           rows={3}
-                          disabled={isLoading}
+                          disabled={countryLoading}
                           {...field}
                           className="pr-16"
-                          // onChange={(event) => {
-                          //   field.onChange(event)
-                          //   debounce(() => form.handleSubmit(onSubmit))
-                          // }}
-                          // className="resize-none"
                         />
                       </FormControl>
                       <Button
                         type="submit"
                         className="absolute right-1 bg-transparent hover:bg-transparent shadow-none"
-                        disabled={isLoading}
+                        disabled={countryLoading}
                       >
                         <LucideIcons.SendHorizonal className="text-white" />
                       </Button>
-                      {/* <FormMessage /> */}
                     </FormItem>
                   )}
                 />
