@@ -124,7 +124,7 @@ const TextForm = () => {
               />
             </div>
             <div className="flex flex-col h-full">
-              <ChatTexts historyData={historyData} />
+              <ChatTexts historyData={historyData} className="absolute" />
               <div className="p-2 bottom-2 w-full flex items-center">
                 <FormField
                   name="text"
