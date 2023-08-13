@@ -14,7 +14,7 @@ const ChatTexts = ({ historyData }: any) => {
             <ChatText
               role={text.role || ''}
               content={text.content || ''}
-              createdAt={text.createdAt || ''}
+              language={text.language.name || ''}
             />
           </div>
         )

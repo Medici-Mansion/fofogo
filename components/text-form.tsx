@@ -30,6 +30,8 @@ import useTranslateText from '@/hooks/use-translate-text'
 import useGetHistoryText from '@/hooks/use-history-text'
 import { useQueryClient } from 'react-query'
 
+import { NavigationPopover } from './navigation-popover'
+
 const TextForm = () => {
   const { toast } = useToast()
   const {
@@ -119,7 +121,11 @@ const TextForm = () => {
           />
         </div>
         <div className="flex flex-col h-full">
-          <ChatTexts historyData={historyData} className="absolute" />
+          <ChatTexts
+            historyData={historyData}
+            historyLoading={historyLoading}
+            className="absolute"
+          />
           <div className="p-2 bottom-2 w-full flex items-center">
             <FormField
               name="text"
@@ -144,9 +150,7 @@ const TextForm = () => {
                 </FormItem>
               )}
             />
-            <div className="px-3 pl-5">
-              <LucideIcons.CircleEqual className="w-8 h-8 m-auto" />
-            </div>
+            <NavigationPopover />
           </div>
         </div>
       </form>

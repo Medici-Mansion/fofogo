@@ -1,9 +1,11 @@
-import SpeechPage from '@/components/speech'
+import AudienceSpeech from '@/components/audience-speech'
+import MySpeech from '@/components/my-speech'
 
 const page = () => {
   return (
-    <div className="pt-16 h-full">
-      <SpeechPage />
+    <div className="h-full">
+      <AudienceSpeech />
+      <MySpeech />
     </div>
   )
 }
