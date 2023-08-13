@@ -8,6 +8,7 @@ import { UserButton, useUser } from '@clerk/nextjs'
 import { cn } from '@/lib/utils'
 import { ModeToggle } from '@/components/mode-toggle'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 const font = Poppins({
   weight: '600',
@@ -17,6 +18,8 @@ const font = Poppins({
 export const Navbar = () => {
   const { isLoaded } = useUser()
   const navRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
+  const shoudHideNavPathList = ['/speech']
 
   const setStyleFromNavHeight = () => {
     if (navRef.current) {
@@ -36,7 +39,11 @@ export const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className="fixed w-full z-50 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-secondary h-16"
+      className={cn(
+        'fixed w-full z-50 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-secondary h-16',
+        shoudHideNavPathList.includes(pathname) &&
+          'transition-all -translate-y-full'
+      )}
     >
       <div className="flex items-center">
         <Image
