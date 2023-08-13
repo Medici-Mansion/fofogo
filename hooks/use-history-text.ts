@@ -1,13 +1,11 @@
 'use client'
-import { useQuery } from "react-query";
-import TranslateApi from "@/APIs/translateApi";
-
+import { useQuery } from '@tanstack/react-query'
+import TranslateApi from '@/APIs/translateApi'
 
 const useGetHistoryText = () => {
-  const { data, isLoading, error } = useQuery(TranslateApi.queries.getHistoryText)
-
   return {
-    data, isLoading, error, key: TranslateApi.queries.getHistoryText.queryKey
+    ...useQuery(TranslateApi.queries.getHistoryText),
+    key: TranslateApi.queries.getHistoryText.queryKey,
   }
 }
 

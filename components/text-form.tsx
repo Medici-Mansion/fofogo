@@ -24,13 +24,15 @@ import TranslateTextValidation from '@/validation/translate/text.validation'
 import * as LucideIcons from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Validation } from '@/validation/translate/text.validation'
 import useTranslateText from '@/hooks/use-translate-text'
 import useGetHistoryText from '@/hooks/use-history-text'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { NavigationPopover } from './navigation-popover'
+import { motion } from 'framer-motion'
+import Loading from '@/components/loading'
 
 const TextForm = () => {
   const { toast } = useToast()
@@ -38,12 +40,14 @@ const TextForm = () => {
     data: countryData,
     error: countryError,
     isLoading: countryLoading,
+    refetch: countryRefetch,
   } = useGetCountry()
   const {
     data: historyData,
     error: historyError,
     isLoading: historyLoading,
     key: historyKey,
+    refetch: historyRefetch,
   } = useGetHistoryText()
   const { mutate } = useTranslateText()
   const queryClient = useQueryClient()
@@ -74,6 +78,8 @@ const TextForm = () => {
     mutate(textFormValue)
   }
 
+  const isLoading = countryLoading || historyLoading
+
   useEffect(() => {
     if (Object.keys(form.formState.errors).length) {
       toast({
@@ -83,9 +89,16 @@ const TextForm = () => {
     }
   }, [form.formState.errors, toast])
 
-  return !countryLoading && !historyLoading ? (
+  return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
+      <motion.form
+        onSubmit={form.handleSubmit(onSubmit)}
+        key="form"
+        className="h-full"
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+      >
         <div className="grid grid-cols-2 gap-4 px-2">
           <FormField
             name="to"
@@ -153,9 +166,9 @@ const TextForm = () => {
             <NavigationPopover />
           </div>
         </div>
-      </form>
+      </motion.form>
     </Form>
-  ) : null
+  )
 }
 
 export default TextForm

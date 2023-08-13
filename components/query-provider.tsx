@@ -1,20 +1,16 @@
 'use client'
+
 import { PropsWithChildren } from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import getQueryClient from '@/app/getQueryClient'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      retry: 3,
-      refetchOnWindowFocus: false,
-    },
-  },
-})
-
+const queryClient = getQueryClient()
 export const QueryProvider = ({ children }: PropsWithChildren) => {
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   )
 }

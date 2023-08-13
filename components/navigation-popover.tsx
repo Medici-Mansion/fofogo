@@ -6,11 +6,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import useVoice from '@/hooks/use-voice'
 import * as LucideIcons from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 export function NavigationPopover() {
   const router = useRouter()
+
+  const recorder = useVoice()
 
   return (
     <Popover>
@@ -35,7 +38,12 @@ export function NavigationPopover() {
           <LucideIcons.Mic
             className="w-10 h-10 text-[#68cede] border border-primary/10 rounded-full bg-background p-1.5"
             onClick={() => {
-              router.push('/')
+              recorder.start({
+                callback(result) {
+                  console.log(result)
+                },
+                lang: 'ko',
+              })
             }}
           />
         </p>
