@@ -1427,7 +1427,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dom-speech-recognition@npm:*":
+"@types/dom-speech-recognition@npm:^0.0.1":
   version: 0.0.1
   resolution: "@types/dom-speech-recognition@npm:0.0.1"
   checksum: 8b34af73c311580fa17842d72025a6d9d3eb0768f03e8eac91d2699566800efb6e99cba8138c0b44f16a00822ba8a6da00f830aff504cbf996bc86bbe4834fc2
@@ -1593,15 +1593,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: e02ea908289a7ad26053308248d2b87f6aeafd73d0e2de2a3d435947bcea0422599016ffd1c3e38ff36c42f5e1c87c7417f05b0a157e48649e4a02f21727d54f
-  languageName: node
-  linkType: hard
-
-"@types/react-speech-recognition@npm:^3.9.2":
-  version: 3.9.2
-  resolution: "@types/react-speech-recognition@npm:3.9.2"
-  dependencies:
-    "@types/dom-speech-recognition": "*"
-  checksum: 79b6f654dfab62baa66fb0e18138e8330f1e4c10760e289ded64964ae43fb494a99dc999e6b2ae5e7484239dfd4718cd4d9cc1aafae46485b71ec29709bedb22
   languageName: node
   linkType: hard
 
@@ -3576,10 +3567,10 @@ __metadata:
     "@radix-ui/react-slot": ^1.0.2
     "@radix-ui/react-toast": ^1.1.4
     "@tanstack/react-query-devtools": ^4.32.6
+    "@types/dom-speech-recognition": ^0.0.1
     "@types/node": ^20.4.9
     "@types/react": 18.2.18
     "@types/react-dom": 18.2.7
-    "@types/react-speech-recognition": ^3.9.2
     "@yarnpkg/pnpify": ^4.0.0-rc.48
     autoprefixer: 10.4.14
     axios: ^1.4.0

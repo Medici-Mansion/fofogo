@@ -42,10 +42,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@radix-ui/react-slot", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:1.0.2"],\
             ["@radix-ui/react-toast", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:1.1.4"],\
             ["@tanstack/react-query-devtools", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:4.32.6"],\
+            ["@types/dom-speech-recognition", "npm:0.0.1"],\
             ["@types/node", "npm:20.4.9"],\
             ["@types/react", "npm:18.2.18"],\
             ["@types/react-dom", "npm:18.2.7"],\
-            ["@types/react-speech-recognition", "npm:3.9.2"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.48"],\
             ["autoprefixer", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:10.4.14"],\
             ["axios", "npm:1.4.0"],\
@@ -2200,16 +2200,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/react-dom", "npm:18.2.7"],\
             ["@types/react", "npm:18.2.20"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/react-speech-recognition", [\
-        ["npm:3.9.2", {\
-          "packageLocation": "./.yarn/cache/@types-react-speech-recognition-npm-3.9.2-a14ef62656-79b6f654df.zip/node_modules/@types/react-speech-recognition/",\
-          "packageDependencies": [\
-            ["@types/react-speech-recognition", "npm:3.9.2"],\
-            ["@types/dom-speech-recognition", "npm:0.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4637,10 +4627,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@radix-ui/react-slot", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:1.0.2"],\
             ["@radix-ui/react-toast", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:1.1.4"],\
             ["@tanstack/react-query-devtools", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:4.32.6"],\
+            ["@types/dom-speech-recognition", "npm:0.0.1"],\
             ["@types/node", "npm:20.4.9"],\
             ["@types/react", "npm:18.2.18"],\
             ["@types/react-dom", "npm:18.2.7"],\
-            ["@types/react-speech-recognition", "npm:3.9.2"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.48"],\
             ["autoprefixer", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:10.4.14"],\
             ["axios", "npm:1.4.0"],\
