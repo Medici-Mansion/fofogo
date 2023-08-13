@@ -65,7 +65,8 @@ export class Recorder {
       this.recognitionHistory.push(speechResult)
     }
 
-    this.SpeechRecognition.onaudiostart = function (event) {
+    this.SpeechRecognition.onaudiostart = (event) => {
+      window.addEventListener('click', this.disableClick)
       console.log('SpeechRecognition.onaudiostart')
     }
 
@@ -88,9 +89,14 @@ export class Recorder {
 
   stop() {
     this.track?.stop()
+    window.removeEventListener('click', this.disableClick)
   }
 
   getStream() {
     return this.stream
+  }
+
+  private disableClick(event: MouseEvent) {
+    this.stop()
   }
 }
