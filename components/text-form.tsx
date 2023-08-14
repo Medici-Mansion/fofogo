@@ -40,7 +40,7 @@ const TextForm = () => {
   const {
     data: countryData,
     error: countryError,
-    isLoading: countryLoading,
+    isLoading,
     refetch: countryRefetch,
   } = useGetCountry()
 
@@ -107,7 +107,7 @@ const TextForm = () => {
               <FormItem>
                 <FormLabel>to</FormLabel>
                 <Select
-                  disabled={countryLoading}
+                  disabled={isLoading}
                   onValueChange={field.onChange}
                   value={field.value}
                   defaultValue={field.value}
@@ -144,7 +144,7 @@ const TextForm = () => {
                   <FormControl>
                     <Textarea
                       rows={3}
-                      disabled={countryLoading}
+                      disabled={isLoading}
                       {...field}
                       className="pr-16"
                     />
@@ -152,14 +152,14 @@ const TextForm = () => {
                   <Button
                     type="submit"
                     className="absolute right-1 bg-transparent hover:bg-transparent shadow-none"
-                    disabled={countryLoading}
+                    disabled={isLoading}
                   >
                     <LucideIcons.SendHorizonal className="text-white" />
                   </Button>
                 </FormItem>
               )}
             />
-            <NavigationPopover />
+            <NavigationPopover select={form.getValues()} />
           </div>
         </div>
       </motion.form>
