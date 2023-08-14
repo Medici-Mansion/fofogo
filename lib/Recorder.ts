@@ -21,13 +21,11 @@ export class Recorder {
     if (typeof window === 'undefined') {
       throw new Error('서버 환경에서 사용할 수 없습니다.')
     }
-    const Recognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition
-    const GrammarList =
-      window.SpeechGrammarList || window.webkitSpeechGrammarList
 
-    this.SpeechRecognition = new Recognition()
-    this.SpeechGrammarList = new GrammarList()
+    this.SpeechRecognition = new (window.SpeechRecognition ||
+      window.webkitSpeechRecognition)()
+    this.SpeechGrammarList = new (window.SpeechGrammarList ||
+      window.webkitSpeechGrammarList)()
     this.RecognitionEvent =
       window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent
     this.permission = false
@@ -96,7 +94,8 @@ export class Recorder {
     return this.stream
   }
 
-  private disableClick(event: MouseEvent) {
+  private disableClick = (event: MouseEvent) => {
+    this.SpeechRecognition.stop()
     this.stop()
   }
 }

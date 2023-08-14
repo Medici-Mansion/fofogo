@@ -1046,7 +1046,7 @@ export namespace Prisma {
      * 
      * Determine the order of Languages to fetch.
      */
-    orderBy?: LanguageOrderByWithRelationInput | LanguageOrderByWithRelationInput[]
+    orderBy?: LanguageOrderByWithRelationAndSearchRelevanceInput | LanguageOrderByWithRelationAndSearchRelevanceInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
@@ -1622,7 +1622,7 @@ export namespace Prisma {
      * 
      * Determine the order of Languages to fetch.
      */
-    orderBy?: LanguageOrderByWithRelationInput | LanguageOrderByWithRelationInput[]
+    orderBy?: LanguageOrderByWithRelationAndSearchRelevanceInput | LanguageOrderByWithRelationAndSearchRelevanceInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
@@ -1671,7 +1671,7 @@ export namespace Prisma {
      * 
      * Determine the order of Languages to fetch.
      */
-    orderBy?: LanguageOrderByWithRelationInput | LanguageOrderByWithRelationInput[]
+    orderBy?: LanguageOrderByWithRelationAndSearchRelevanceInput | LanguageOrderByWithRelationAndSearchRelevanceInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
@@ -1720,7 +1720,7 @@ export namespace Prisma {
      * 
      * Determine the order of Languages to fetch.
      */
-    orderBy?: LanguageOrderByWithRelationInput | LanguageOrderByWithRelationInput[]
+    orderBy?: LanguageOrderByWithRelationAndSearchRelevanceInput | LanguageOrderByWithRelationAndSearchRelevanceInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
@@ -1882,7 +1882,7 @@ export namespace Prisma {
      */
     include?: MessageInclude<ExtArgs> | null
     where?: MessageWhereInput
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: MessageOrderByWithRelationAndSearchRelevanceInput | MessageOrderByWithRelationAndSearchRelevanceInput[]
     cursor?: MessageWhereUniqueInput
     take?: number
     skip?: number
@@ -1989,7 +1989,7 @@ export namespace Prisma {
      * 
      * Determine the order of Messages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: MessageOrderByWithRelationAndSearchRelevanceInput | MessageOrderByWithRelationAndSearchRelevanceInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
@@ -2583,7 +2583,7 @@ export namespace Prisma {
      * 
      * Determine the order of Messages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: MessageOrderByWithRelationAndSearchRelevanceInput | MessageOrderByWithRelationAndSearchRelevanceInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
@@ -2632,7 +2632,7 @@ export namespace Prisma {
      * 
      * Determine the order of Messages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: MessageOrderByWithRelationAndSearchRelevanceInput | MessageOrderByWithRelationAndSearchRelevanceInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
@@ -2681,7 +2681,7 @@ export namespace Prisma {
      * 
      * Determine the order of Messages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: MessageOrderByWithRelationAndSearchRelevanceInput | MessageOrderByWithRelationAndSearchRelevanceInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
@@ -2898,6 +2898,25 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+  export const LanguageOrderByRelevanceFieldEnum: {
+    id: 'id',
+    code: 'code',
+    name: 'name'
+  };
+
+  export type LanguageOrderByRelevanceFieldEnum = (typeof LanguageOrderByRelevanceFieldEnum)[keyof typeof LanguageOrderByRelevanceFieldEnum]
+
+
+  export const MessageOrderByRelevanceFieldEnum: {
+    id: 'id',
+    content: 'content',
+    userId: 'userId',
+    languageId: 'languageId'
+  };
+
+  export type MessageOrderByRelevanceFieldEnum = (typeof MessageOrderByRelevanceFieldEnum)[keyof typeof MessageOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references 
    */
@@ -2972,11 +2991,12 @@ export namespace Prisma {
     Message?: MessageListRelationFilter
   }
 
-  export type LanguageOrderByWithRelationInput = {
+  export type LanguageOrderByWithRelationAndSearchRelevanceInput = {
     id?: SortOrder
     code?: SortOrder
     name?: SortOrder
     Message?: MessageOrderByRelationAggregateInput
+    _relevance?: LanguageOrderByRelevanceInput
   }
 
   export type LanguageWhereUniqueInput = Prisma.AtLeast<{
@@ -3021,7 +3041,7 @@ export namespace Prisma {
     language?: XOR<LanguageRelationFilter, LanguageWhereInput>
   }
 
-  export type MessageOrderByWithRelationInput = {
+  export type MessageOrderByWithRelationAndSearchRelevanceInput = {
     id?: SortOrder
     role?: SortOrder
     content?: SortOrder
@@ -3029,7 +3049,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     languageId?: SortOrder
-    language?: LanguageOrderByWithRelationInput
+    language?: LanguageOrderByWithRelationAndSearchRelevanceInput
+    _relevance?: MessageOrderByRelevanceInput
   }
 
   export type MessageWhereUniqueInput = Prisma.AtLeast<{
@@ -3198,6 +3219,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
   }
@@ -3210,6 +3232,12 @@ export namespace Prisma {
 
   export type MessageOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type LanguageOrderByRelevanceInput = {
+    fields: LanguageOrderByRelevanceFieldEnum | LanguageOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type LanguageCountOrderByAggregateInput = {
@@ -3241,6 +3269,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
@@ -3269,6 +3298,12 @@ export namespace Prisma {
   export type LanguageRelationFilter = {
     is?: LanguageWhereInput
     isNot?: LanguageWhereInput
+  }
+
+  export type MessageOrderByRelevanceInput = {
+    fields: MessageOrderByRelevanceFieldEnum | MessageOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type MessageCountOrderByAggregateInput = {
@@ -3404,6 +3439,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
@@ -3418,6 +3454,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>

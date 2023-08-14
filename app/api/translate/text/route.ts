@@ -6,7 +6,12 @@ import { auth } from '@clerk/nextjs'
 import { v2 } from '@google-cloud/translate'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET() {
+const PAGE_TAKE = 10
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const page = Number(searchParams.get('page') || 0)
+
   const { userId } = auth()
   if (!userId) {
     return NextResponse.json(
@@ -20,7 +25,6 @@ export async function GET() {
       }
     )
   }
-
   const result = await prismadb.message.findMany({
     where: {
       userId,
@@ -34,11 +38,27 @@ export async function GET() {
       language: true,
     },
     orderBy: {
-      createdAt: 'asc',
+      createdAt: 'desc',
+    },
+    skip: PAGE_TAKE * page,
+    take: PAGE_TAKE,
+  })
+  const total = await prismadb.message.count({
+    where: {
+      userId,
     },
   })
 
-  return NextResponse.json(handler({ data: result }))
+  return NextResponse.json(
+    handler({
+      data: {
+        chats: result,
+        count: result.length,
+        hasNext: result.length === 10,
+        total,
+      },
+    })
+  )
 }
 
 export async function POST(req: NextRequest) {
@@ -81,24 +101,27 @@ export async function POST(req: NextRequest) {
       from,
       to,
     })
-
-    const re = await prismadb.message.createMany({
-      data: [
-        {
-          content: text,
-          role: Role.user,
-          userId,
-          languageId: from,
-        },
-        {
-          content: result,
-          role: Role.system,
-          userId,
-          languageId: to,
-        },
-      ],
+    await prismadb.message.create({
+      data: {
+        content: text,
+        role: Role.user,
+        userId,
+        languageId: from,
+      },
     })
-
+    await prismadb.message.create({
+      data: {
+        content: result,
+        role: Role.system,
+        userId,
+        languageId: to,
+      },
+    })
+    // await new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve(1)
+    //   }, 10000)
+    // })
     return NextResponse.json(handler({ data: result }))
   } catch (error) {
     return NextResponse.json(

@@ -28,27 +28,22 @@ import { useEffect, useState } from 'react'
 import { Validation } from '@/validation/translate/text.validation'
 import useTranslateText from '@/hooks/use-translate-text'
 import useGetHistoryText from '@/hooks/use-history-text'
-import { useQueryClient } from '@tanstack/react-query'
+import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 
 import { NavigationPopover } from './navigation-popover'
 import { motion } from 'framer-motion'
 import Loading from '@/components/loading'
+import TranslateApi, { HistoryTextResponse } from '@/APIs/translateApi'
 
 const TextForm = () => {
   const { toast } = useToast()
   const {
     data: countryData,
     error: countryError,
-    isLoading: countryLoading,
+    isLoading,
     refetch: countryRefetch,
   } = useGetCountry()
-  const {
-    data: historyData,
-    error: historyError,
-    isLoading: historyLoading,
-    key: historyKey,
-    refetch: historyRefetch,
-  } = useGetHistoryText()
+
   const { mutate } = useTranslateText()
   const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof TranslateTextValidation.POST>>({
@@ -60,25 +55,30 @@ const TextForm = () => {
 
   const onSubmit = async (textFormValue: Validation<'POST'>) => {
     form.setValue('text', '')
-    const newData = queryClient?.getQueryData(historyKey) as { data: [] }
-    queryClient.setQueryData(historyKey, {
-      ...newData,
-      data: [
-        ...newData.data,
-        {
-          content: textFormValue.text,
-          language: textFormValue.from,
-          role: 'user',
-          createdAt: new Date(),
-          id: new Date() + '',
-        },
-      ],
-    })
+    let newData = queryClient?.getQueryData(
+      TranslateApi.queries.getHistoryText.queryKey
+    ) as InfiniteData<HistoryTextResponse['data']>
 
+    newData.pages[newData.pages.length - 1].chats.push({
+      content: textFormValue.text,
+      language: {
+        id: 'user',
+        code: textFormValue.from,
+        name: '한국어',
+      },
+      role: 'user',
+      createdAt: new Date() + '',
+      id: new Date() + '',
+      updatedAt: new Date() + '',
+    })
+    newData.pages[newData.pages.length - 1].count++
+    newData.pages[newData.pages.length - 1].total++
+    queryClient.setQueryData(
+      TranslateApi.queries.getHistoryText.queryKey,
+      newData
+    )
     mutate(textFormValue)
   }
-
-  const isLoading = countryLoading || historyLoading
 
   useEffect(() => {
     if (Object.keys(form.formState.errors).length) {
@@ -107,7 +107,7 @@ const TextForm = () => {
               <FormItem>
                 <FormLabel>to</FormLabel>
                 <Select
-                  disabled={countryLoading}
+                  disabled={isLoading}
                   onValueChange={field.onChange}
                   value={field.value}
                   defaultValue={field.value}
@@ -134,11 +134,7 @@ const TextForm = () => {
           />
         </div>
         <div className="flex flex-col h-full">
-          <ChatTexts
-            historyData={historyData}
-            historyLoading={isLoading}
-            className="absolute"
-          />
+          <ChatTexts />
           <div className="p-2 bottom-2 w-full flex items-center">
             <FormField
               name="text"
