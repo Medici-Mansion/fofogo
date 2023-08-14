@@ -1,10 +1,14 @@
 'use client'
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import TranslateApi from '@/APIs/translateApi'
 
 const useGetHistoryText = () => {
   return {
-    ...useQuery(TranslateApi.queries.getHistoryText),
+    ...useInfiniteQuery({
+      ...TranslateApi.queries.getHistoryText,
+      getNextPageParam: (lastPage, page) =>
+        lastPage.hasNext ? lastPage.page + 1 : undefined,
+    }),
     key: TranslateApi.queries.getHistoryText.queryKey,
   }
 }

@@ -146,6 +146,19 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.LanguageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name'
+};
+
+exports.Prisma.MessageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  content: 'content',
+  userId: 'userId',
+  languageId: 'languageId'
+};
 exports.Role = exports.$Enums.Role = {
   user: 'user',
   system: 'system'
