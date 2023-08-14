@@ -136,7 +136,7 @@ const TextForm = () => {
         <div className="flex flex-col h-full">
           <ChatTexts
             historyData={historyData}
-            historyLoading={historyLoading}
+            historyLoading={isLoading}
             className="absolute"
           />
           <div className="p-2 bottom-2 w-full flex items-center">
@@ -148,7 +148,7 @@ const TextForm = () => {
                   <FormControl>
                     <Textarea
                       rows={3}
-                      disabled={countryLoading}
+                      disabled={isLoading}
                       {...field}
                       className="pr-16"
                     />
@@ -156,14 +156,14 @@ const TextForm = () => {
                   <Button
                     type="submit"
                     className="absolute right-1 bg-transparent hover:bg-transparent shadow-none"
-                    disabled={countryLoading}
+                    disabled={isLoading}
                   >
                     <LucideIcons.SendHorizonal className="text-white" />
                   </Button>
                 </FormItem>
               )}
             />
-            <NavigationPopover />
+            <NavigationPopover select={form.getValues()} />
           </div>
         </div>
       </motion.form>
