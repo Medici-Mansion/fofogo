@@ -55,8 +55,9 @@ const TextForm = () => {
   const { toast } = useToast()
   const { data: countryData, isLoading } = useGetCountry()
   const chatRef = useRef<VirtuosoHandle>(null)
-  const [messages, setMessages] = useState<Message[]>([])
+  const { data: historyData, fetchNextPage } = useGetHistoryText()
 
+  const [messages, setMessages] = useState<Message[]>([])
   const updateMessage = (message: Message) => {
     setMessages((prev) => [...prev, message])
     requestIdleCallback(() => {
@@ -93,13 +94,12 @@ const TextForm = () => {
     })
   }
 
-  const { data: historyData, fetchNextPage, isFetching } = useGetHistoryText()
   const chatBoxList = useMemo(
     () =>
       historyData?.pages
         .map((history) => history.chats)
         .flat()
-        .reverse(),
+        .reverse() || [],
     [historyData?.pages]
   )
 
@@ -120,11 +120,6 @@ const TextForm = () => {
       })
     }
   }, [form.formState.errors, toast])
-
-  useEffect(() => {
-    setMessages(chatBoxList ?? [])
-  }, [chatBoxList])
-
   return (
     <Form {...form}>
       <motion.form
@@ -172,8 +167,7 @@ const TextForm = () => {
         <div className="flex flex-col h-full">
           <ChatTexts
             mref={chatRef}
-            data={messages}
-            isLoading={isFetching}
+            data={[...chatBoxList, ...messages]}
             initialTopMostItemIndex={initialTopMostItemIndex}
             firstItemIndex={last!.total - initialTopMostItemIndex}
             startReached={() => fetchNextPage()}
