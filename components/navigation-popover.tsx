@@ -31,7 +31,7 @@ export function NavigationPopover({ select }: any) {
       <PopoverTrigger asChild>
         <Button
           variant={'outline'}
-          className="border-none hover:bg-none hover:bg-accent-none"
+          className="border-none hover:bg-none hover:bg-accent-none shadow-none"
         >
           <LucideIcons.CircleEqual className="w-8 h-8" />
         </Button>
@@ -39,7 +39,7 @@ export function NavigationPopover({ select }: any) {
       <PopoverContent className="w-30 relative">
         <p className="text-sm text-muted-foreground rounded-full absolute right-12 p-2">
           <LucideIcons.Users
-            className="w-10 h-10 text-[#68cede] border border-primary/10 rounded-full bg-background p-1.5"
+            className="w-10 h-10 text-primary border border-primary/10 rounded-full bg-background p-1.5"
             onClick={() => {
               router.push('/speech')
             }}
@@ -47,7 +47,7 @@ export function NavigationPopover({ select }: any) {
         </p>
         <p className="text-sm text-muted-foreground rounded-full absolute bottom-7 right-0">
           <LucideIcons.Mic
-            className="w-10 h-10 text-[#68cede] border border-primary/10 rounded-full bg-background p-1.5"
+            className="w-10 h-10 text-primary border border-primary/10 rounded-full bg-background p-1.5"
             onClick={() => {
               if (!isCheckLangage) {
                 toast({
@@ -59,7 +59,6 @@ export function NavigationPopover({ select }: any) {
               recorder.start({
                 callback(result) {
                   if (result) {
-                    console.log(typeof result)
                     const mutateParam = {
                       text: result,
                       from: select.from,
@@ -72,7 +71,7 @@ export function NavigationPopover({ select }: any) {
                     queryClient.setQueryData(historyKey, {
                       ...speech,
                       data: [
-                        ...speech.data,
+                        ...(speech?.data || []),
                         {
                           content: result,
                           language: select.ko,

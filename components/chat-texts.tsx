@@ -27,12 +27,12 @@ function ChatTextsInner<T>(
   }: ChatTextsProps<T>,
   ref: ForwardedRef<VirtuosoHandle>
 ) {
-  return isLoading || !data ? null : (
+  return (
     <Virtuoso
       ref={ref}
       className={cn('overflow-x-hidden', className)}
       startReached={startReached}
-      data={data}
+      data={data ?? []}
       initialTopMostItemIndex={initialTopMostItemIndex}
       firstItemIndex={firstItemIndex}
       itemContent={itemContent}

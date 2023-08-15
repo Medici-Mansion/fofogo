@@ -34,6 +34,22 @@ import ChatText from './chat-text'
 import { VirtuosoHandle } from 'react-virtuoso'
 import { Message } from '@/APIs/translateApi'
 import { v4 as uuid } from 'uuid'
+import UserAvatar from './user-avatar'
+import BotAvatar from './bot-avatar'
+
+// IOS requestIdleCallback 지원 X -> 같은 방식으로 윈도우 객체에 강제주입
+window.requestIdleCallback = (cb) => {
+  var start = Date.now()
+  const timeout = setTimeout(() => {
+    cb({
+      didTimeout: false,
+      timeRemaining: function () {
+        return Math.max(0, 50 - (Date.now() - start))
+      },
+    })
+  }, 1)
+  return timeout as unknown as number
+}
 
 const TextForm = () => {
   const { toast } = useToast()
@@ -56,6 +72,7 @@ const TextForm = () => {
     resolver: zodResolver(TranslateTextValidation.POST),
     defaultValues: {
       from: 'ko',
+      to: 'en',
     },
   })
 
@@ -76,7 +93,7 @@ const TextForm = () => {
     })
   }
 
-  const { data: historyData, fetchNextPage } = useGetHistoryText()
+  const { data: historyData, fetchNextPage, isFetching } = useGetHistoryText()
   const chatBoxList = useMemo(
     () =>
       historyData?.pages
@@ -103,9 +120,11 @@ const TextForm = () => {
       })
     }
   }, [form.formState.errors, toast])
+
   useEffect(() => {
     setMessages(chatBoxList ?? [])
   }, [chatBoxList])
+
   return (
     <Form {...form}>
       <motion.form
@@ -154,15 +173,18 @@ const TextForm = () => {
           <ChatTexts
             mref={chatRef}
             data={messages}
+            isLoading={isFetching}
             initialTopMostItemIndex={initialTopMostItemIndex}
             firstItemIndex={last!.total - initialTopMostItemIndex}
             startReached={() => fetchNextPage()}
             itemContent={(_, data) => (
               <div key={data.content}>
                 <ChatText
-                  role={data.role || ''}
                   content={data.content || ''}
                   language={data.language.name || ''}
+                  isMe={data.role === 'user'}
+                  myIcon={<UserAvatar />}
+                  senderIcon={<BotAvatar />}
                 />
               </div>
             )}
@@ -186,7 +208,7 @@ const TextForm = () => {
                     className="absolute right-1 bg-transparent hover:bg-transparent shadow-none"
                     disabled={isLoading}
                   >
-                    <LucideIcons.SendHorizonal className="text-white" />
+                    <LucideIcons.SendHorizonal className="text-foreground" />
                   </Button>
                 </FormItem>
               )}

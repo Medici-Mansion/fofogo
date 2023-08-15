@@ -23,7 +23,7 @@ const MySpeech = () => {
         value={'klawjefklwejflk'}
       />
       <div className="flex">
-        <LucideIcons.Mic className="w-20 h-16 text-[#68cede]" />
+        <LucideIcons.Mic className="w-20 h-16 text-muted" />
         <Select disabled={isLoading}>
           <SelectTrigger className="bg-background">
             <SelectValue placeholder="Select a country" />

@@ -48,9 +48,7 @@ const TranslateApi = {
     getCountryCode: {
       queryKey: ['contry-code'],
       queryFn: async () => {
-        const result = await axios.get(
-          'http://localhost:3000/api/translate/code-list'
-        )
+        const result = await axios.get('/api/translate/code-list')
         return result.data
       },
       suspense: true,
@@ -65,7 +63,7 @@ const TranslateApi = {
         signal?: AbortSignal
       }) => {
         const result = await axios.get<HistoryTextResponse>(
-          'http://localhost:3000/api/translate/text',
+          '/api/translate/text',
           {
             params: { page: pageParam },
             signal,

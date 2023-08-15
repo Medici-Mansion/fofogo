@@ -1,34 +1,22 @@
 export class Recorder {
-  private readonly SpeechRecognition: SpeechRecognition
-  private readonly SpeechGrammarList: SpeechGrammarList
-  private readonly RecognitionEvent: {
-    new (
-      type: string,
-      eventInitDict: SpeechRecognitionEventInit
-    ): SpeechRecognitionEvent
-    prototype: SpeechRecognitionEvent
-  }
+  private static instance: Recorder
+  private readonly SpeechRecognition: SpeechRecognition =
+    new (window.webkitSpeechRecognition || window.SpeechRecognition)()
 
-  // =
-  // window?.SpeechRecognitionEvent || window?.webkitSpeechRecognitionEvent
-
-  private permission: boolean
+  private permission: boolean = false
   private stream?: MediaStream
   private track?: MediaStreamTrack
   private recognitionHistory: string[] = []
 
-  constructor() {
+  public static getInstance() {
+    console.log(typeof window)
     if (typeof window === 'undefined') {
       throw new Error('서버 환경에서 사용할 수 없습니다.')
     }
-
-    this.SpeechRecognition = new (window.SpeechRecognition ||
-      window.webkitSpeechRecognition)()
-    this.SpeechGrammarList = new (window.SpeechGrammarList ||
-      window.webkitSpeechGrammarList)()
-    this.RecognitionEvent =
-      window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent
-    this.permission = false
+    if (!Recorder.instance) {
+      Recorder.instance = new Recorder()
+    }
+    return Recorder.instance
   }
 
   async requestPermission() {
