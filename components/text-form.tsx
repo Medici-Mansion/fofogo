@@ -24,28 +24,34 @@ import TranslateTextValidation from '@/validation/translate/text.validation'
 import * as LucideIcons from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Validation } from '@/validation/translate/text.validation'
 import useTranslateText from '@/hooks/use-translate-text'
 import useGetHistoryText from '@/hooks/use-history-text'
-import { InfiniteData, useQueryClient } from '@tanstack/react-query'
-
 import { NavigationPopover } from './navigation-popover'
 import { motion } from 'framer-motion'
-import Loading from '@/components/loading'
-import TranslateApi, { HistoryTextResponse } from '@/APIs/translateApi'
+import ChatText from './chat-text'
+import { VirtuosoHandle } from 'react-virtuoso'
+import { Message } from '@/APIs/translateApi'
+import { v4 as uuid } from 'uuid'
 
 const TextForm = () => {
   const { toast } = useToast()
-  const {
-    data: countryData,
-    error: countryError,
-    isLoading,
-    refetch: countryRefetch,
-  } = useGetCountry()
+  const { data: countryData, isLoading } = useGetCountry()
+  const chatRef = useRef<VirtuosoHandle>(null)
+  const [messages, setMessages] = useState<Message[]>([])
 
-  const { mutate } = useTranslateText()
-  const queryClient = useQueryClient()
+  const updateMessage = (message: Message) => {
+    setMessages((prev) => [...prev, message])
+    requestIdleCallback(() => {
+      chatRef?.current?.scrollToIndex({ index: 'LAST' })
+    })
+  }
+  const { mutate } = useTranslateText({
+    onSuccess(data) {
+      updateMessage(data.data)
+    },
+  })
   const form = useForm<z.infer<typeof TranslateTextValidation.POST>>({
     resolver: zodResolver(TranslateTextValidation.POST),
     defaultValues: {
@@ -55,30 +61,39 @@ const TextForm = () => {
 
   const onSubmit = async (textFormValue: Validation<'POST'>) => {
     form.setValue('text', '')
-    let newData = queryClient?.getQueryData(
-      TranslateApi.queries.getHistoryText.queryKey
-    ) as InfiniteData<HistoryTextResponse['data']>
-
-    newData.pages[newData.pages.length - 1].chats.push({
+    mutate(textFormValue)
+    updateMessage({
       content: textFormValue.text,
+      createdAt: new Date() + '',
+      updatedAt: new Date() + '',
+      id: uuid(),
       language: {
-        id: 'user',
-        code: textFormValue.from,
+        code: 'ko',
         name: '한국어',
+        id: uuid(),
       },
       role: 'user',
-      createdAt: new Date() + '',
-      id: new Date() + '',
-      updatedAt: new Date() + '',
     })
-    newData.pages[newData.pages.length - 1].count++
-    newData.pages[newData.pages.length - 1].total++
-    queryClient.setQueryData(
-      TranslateApi.queries.getHistoryText.queryKey,
-      newData
-    )
-    mutate(textFormValue)
   }
+
+  const { data: historyData, fetchNextPage } = useGetHistoryText()
+  const chatBoxList = useMemo(
+    () =>
+      historyData?.pages
+        .map((history) => history.chats)
+        .flat()
+        .reverse(),
+    [historyData?.pages]
+  )
+
+  const last = historyData?.pages.findLast((arg) => arg)
+  const initialTopMostItemIndex = useMemo(() => {
+    let totalCount = 0
+    historyData?.pages.forEach((page) => {
+      totalCount += page.count
+    })
+    return totalCount
+  }, [historyData?.pages])
 
   useEffect(() => {
     if (Object.keys(form.formState.errors).length) {
@@ -88,7 +103,9 @@ const TextForm = () => {
       })
     }
   }, [form.formState.errors, toast])
-
+  useEffect(() => {
+    setMessages(chatBoxList ?? [])
+  }, [chatBoxList])
   return (
     <Form {...form}>
       <motion.form
@@ -134,7 +151,22 @@ const TextForm = () => {
           />
         </div>
         <div className="flex flex-col h-full">
-          <ChatTexts />
+          <ChatTexts
+            mref={chatRef}
+            data={messages}
+            initialTopMostItemIndex={initialTopMostItemIndex}
+            firstItemIndex={last!.total - initialTopMostItemIndex}
+            startReached={() => fetchNextPage()}
+            itemContent={(_, data) => (
+              <div key={data.content}>
+                <ChatText
+                  role={data.role || ''}
+                  content={data.content || ''}
+                  language={data.language.name || ''}
+                />
+              </div>
+            )}
+          />
           <div className="p-2 bottom-2 w-full flex items-center">
             <FormField
               name="text"

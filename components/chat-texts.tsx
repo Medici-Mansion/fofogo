@@ -1,55 +1,52 @@
 'use client'
 
-import useGetHistoryText from '@/hooks/use-history-text'
-import ChatText from './chat-text'
-import { Virtuoso, VirtuosoHandle } from 'react-virtuoso'
-import { useCallback, useMemo, useRef } from 'react'
+import {
+  IndexLocationWithAlign,
+  Virtuoso,
+  VirtuosoHandle,
+  VirtuosoProps,
+} from 'react-virtuoso'
+import { ForwardedRef, Ref, forwardRef, useRef } from 'react'
+import { cn } from '@/lib/utils'
 
-const ChatTexts = () => {
-  const {
-    data: historyData,
-    error: historyError,
-    isLoading: historyLoading,
-    key: historyKey,
-    refetch: historyRefetch,
-    fetchNextPage,
-  } = useGetHistoryText()
-
-  const chatBoxList = useMemo(
-    () =>
-      historyData?.pages
-        .map((history) => history.chats)
-        .flat()
-        .reverse(),
-    [historyData?.pages]
-  )
-
-  const last = historyData?.pages.findLast((arg) => arg)
-
-  return !historyLoading ? (
+interface ChatTextsProps<T, C = any> extends VirtuosoProps<T, C> {
+  isLoading?: boolean
+  initialTopMostItemIndex?: number | IndexLocationWithAlign
+  startReached?: (index: number) => void
+  firstItemIndex?: number
+}
+function ChatTextsInner<T>(
+  {
+    data,
+    className,
+    firstItemIndex,
+    isLoading,
+    initialTopMostItemIndex,
+    itemContent,
+    startReached,
+  }: ChatTextsProps<T>,
+  ref: ForwardedRef<VirtuosoHandle>
+) {
+  return isLoading || !data ? null : (
     <Virtuoso
-      startReached={() => fetchNextPage()}
-      data={chatBoxList}
-      initialTopMostItemIndex={13}
-      firstItemIndex={
-        last!.total -
-          historyData!.pages.reduce(({ count: aCount }, { count: bCount }) => {
-            return { count: aCount + bCount }
-          })?.count || 0
-      }
-      itemContent={(index, data, context) => {
-        return (
-          <div key={data.id}>
-            <ChatText
-              role={data.role || ''}
-              content={data.content || ''}
-              language={data.language.name || ''}
-            />
-          </div>
-        )
-      }}
+      ref={ref}
+      className={cn('overflow-x-hidden', className)}
+      startReached={startReached}
+      data={data}
+      initialTopMostItemIndex={initialTopMostItemIndex}
+      firstItemIndex={firstItemIndex}
+      itemContent={itemContent}
     />
-  ) : null
+  )
+}
+type ChatTextsWithRefProps<T> = ChatTextsProps<T> & {
+  mref?: Ref<VirtuosoHandle>
 }
 
-export default ChatTexts
+const ChatTextsWithRef = forwardRef(ChatTextsInner)
+export default function ChatTexts<T extends unknown>({
+  mref,
+  ...props
+}: ChatTextsWithRefProps<T>) {
+  return <ChatTextsWithRef {...props} ref={mref} />
+}
