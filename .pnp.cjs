@@ -48,6 +48,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:20.4.9"],\
             ["@types/react", "npm:18.2.18"],\
             ["@types/react-dom", "npm:18.2.7"],\
+            ["@types/uuid", "npm:9.0.2"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.48"],\
             ["autoprefixer", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:10.4.14"],\
             ["axios", "npm:1.4.0"],\
@@ -72,6 +73,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tailwindcss", "npm:3.3.3"],\
             ["tailwindcss-animate", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:1.0.6"],\
             ["typescript", "patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"],\
+            ["uuid", "npm:9.0.0"],\
             ["valibot", "npm:0.11.1"],\
             ["zod", "npm:3.21.4"]\
           ],\
@@ -2365,6 +2367,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-treeify-npm-1.0.0-b5e04e9cd3-1b2397030d.zip/node_modules/@types/treeify/",\
           "packageDependencies": [\
             ["@types/treeify", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/uuid", [\
+        ["npm:9.0.2", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-9.0.2-f2a5f65979-1754bcf344.zip/node_modules/@types/uuid/",\
+          "packageDependencies": [\
+            ["@types/uuid", "npm:9.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4712,6 +4723,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:20.4.9"],\
             ["@types/react", "npm:18.2.18"],\
             ["@types/react-dom", "npm:18.2.7"],\
+            ["@types/uuid", "npm:9.0.2"],\
             ["@yarnpkg/pnpify", "npm:4.0.0-rc.48"],\
             ["autoprefixer", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:10.4.14"],\
             ["axios", "npm:1.4.0"],\
@@ -4736,6 +4748,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tailwindcss", "npm:3.3.3"],\
             ["tailwindcss-animate", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:1.0.6"],\
             ["typescript", "patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"],\
+            ["uuid", "npm:9.0.0"],\
             ["valibot", "npm:0.11.1"],\
             ["zod", "npm:3.21.4"]\
           ],\

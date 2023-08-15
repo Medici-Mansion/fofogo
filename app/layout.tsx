@@ -1,6 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider, auth } from '@clerk/nextjs'
 import ThemeProvider from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
 import { QueryProvider } from '@/components/query-provider'
@@ -16,6 +16,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const { userId } = auth()
   return (
     <ClerkProvider>
       <html
@@ -26,7 +27,7 @@ export default async function RootLayout({
         <body>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <QueryProvider>
-              <Navbar />
+              {userId && <Navbar />}
               {children}
               <Toaster />
             </QueryProvider>

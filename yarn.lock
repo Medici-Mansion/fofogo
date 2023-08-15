@@ -1745,6 +1745,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^9.0.2":
+  version: 9.0.2
+  resolution: "@types/uuid@npm:9.0.2"
+  checksum: 1754bcf3444e1e3aeadd6e774fc328eb53bc956665e2e8fb6ec127aa8e1f43d9a224c3d22a9a6233dca8dd81a12dc7fed4d84b8876dd5ec82d40f574f7ff8b68
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/parser@npm:^5.4.2 || ^6.0.0":
   version: 6.3.0
   resolution: "@typescript-eslint/parser@npm:6.3.0"
@@ -3626,6 +3633,7 @@ __metadata:
     "@types/node": ^20.4.9
     "@types/react": 18.2.18
     "@types/react-dom": 18.2.7
+    "@types/uuid": ^9.0.2
     "@yarnpkg/pnpify": ^4.0.0-rc.48
     autoprefixer: 10.4.14
     axios: ^1.4.0
@@ -3650,6 +3658,7 @@ __metadata:
     tailwindcss: 3.3.3
     tailwindcss-animate: ^1.0.6
     typescript: 5.1.6
+    uuid: ^9.0.0
     valibot: ^0.11.1
     zod: ^3.21.4
   languageName: unknown

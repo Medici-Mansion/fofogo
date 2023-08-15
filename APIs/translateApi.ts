@@ -7,28 +7,40 @@ import type {
 } from '@tanstack/react-query'
 
 type QueryMethod = UseQueryOptions<unknown, unknown, unknown, QueryKey>
-type MutationOptions<T> = UseMutationOptions<unknown, unknown, T, unknown>
+type MutationOptions<
+  TData = unknown,
+  TError = unknown,
+  TVariables = void,
+  TContext = unknown
+> = UseMutationOptions<TData, TError, TVariables, TContext>
+export interface Message {
+  content: string
+  createdAt: string
+  id: string
+  role: 'system' | 'user'
+  updatedAt: string
+  language: {
+    id: string
+    code: string
+    name: string
+  }
+}
 
 export interface HistoryTextResponse {
   ok: boolean
   error?: any
   data: {
-    chats: {
-      content: string
-      createdAt: string
-      id: string
-      role: 'system' | 'user'
-      updatedAt: string
-      language: {
-        id: string
-        code: string
-        name: string
-      }
-    }[]
+    chats: Message[]
     count: number
     hasNext: boolean
     total: number
   }
+}
+
+export interface MutationTextReponse {
+  ok: boolean
+  data: Message
+  error?: any
 }
 
 const TranslateApi = {
@@ -69,10 +81,13 @@ const TranslateApi = {
     translateText: {
       mutationKey: ['translate-text'],
       mutationFn: async (param) => {
-        const result = await axios.post('/api/translate/text', param)
+        const result = await axios.post<MutationTextReponse>(
+          '/api/translate/text',
+          param
+        )
         return result.data
       },
-    } satisfies MutationOptions<Validation<'POST'>>,
+    } as MutationOptions<MutationTextReponse, any, Validation<'POST'>>,
   },
 }
 

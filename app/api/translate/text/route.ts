@@ -109,12 +109,15 @@ export async function POST(req: NextRequest) {
         languageId: from,
       },
     })
-    await prismadb.message.create({
+    const response = await prismadb.message.create({
       data: {
         content: result,
         role: Role.system,
         userId,
         languageId: to,
+      },
+      include: {
+        language: true,
       },
     })
     // await new Promise((resolve) => {
@@ -122,7 +125,7 @@ export async function POST(req: NextRequest) {
     //     resolve(1)
     //   }, 10000)
     // })
-    return NextResponse.json(handler({ data: result }))
+    return NextResponse.json(handler({ data: response }))
   } catch (error) {
     return NextResponse.json(
       handler({
