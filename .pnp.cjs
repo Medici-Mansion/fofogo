@@ -31,6 +31,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@clerk/nextjs", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:4.23.2"],\
             ["@google-cloud/translate", "npm:8.0.1"],\
             ["@hookform/resolvers", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:3.2.0"],\
+            ["@next/font", "npm:13.4.16"],\
             ["@prisma/client", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:5.1.1"],\
             ["@radix-ui/react-avatar", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:1.0.3"],\
             ["@radix-ui/react-dropdown-menu", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:2.0.5"],\
@@ -68,6 +69,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:18.2.0"],\
             ["react-hook-form", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:7.45.4"],\
+            ["react-spinners", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:0.13.8"],\
             ["react-virtuoso", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:4.5.0"],\
             ["tailwind-merge", "npm:1.14.0"],\
             ["tailwindcss", "npm:3.3.3"],\
@@ -600,6 +602,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@next/eslint-plugin-next", "npm:13.4.13"],\
             ["glob", "npm:7.1.7"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@next/font", [\
+        ["npm:13.4.16", {\
+          "packageLocation": "./.yarn/cache/@next-font-npm-13.4.16-356f53a9ff-12425ef1d2.zip/node_modules/@next/font/",\
+          "packageDependencies": [\
+            ["@next/font", "npm:13.4.16"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4706,6 +4717,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@clerk/nextjs", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:4.23.2"],\
             ["@google-cloud/translate", "npm:8.0.1"],\
             ["@hookform/resolvers", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:3.2.0"],\
+            ["@next/font", "npm:13.4.16"],\
             ["@prisma/client", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:5.1.1"],\
             ["@radix-ui/react-avatar", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:1.0.3"],\
             ["@radix-ui/react-dropdown-menu", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:2.0.5"],\
@@ -4743,6 +4755,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:18.2.0"],\
             ["react-hook-form", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:7.45.4"],\
+            ["react-spinners", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:0.13.8"],\
             ["react-virtuoso", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:4.5.0"],\
             ["tailwind-merge", "npm:1.14.0"],\
             ["tailwindcss", "npm:3.3.3"],\
@@ -7397,6 +7410,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "packagePeers": [\
             "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-spinners", [\
+        ["npm:0.13.8", {\
+          "packageLocation": "./.yarn/cache/react-spinners-npm-0.13.8-bf54f5b324-cb58f916bb.zip/node_modules/react-spinners/",\
+          "packageDependencies": [\
+            ["react-spinners", "npm:0.13.8"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:0.13.8", {\
+          "packageLocation": "./.yarn/__virtual__/react-spinners-virtual-37484884fa/0/cache/react-spinners-npm-0.13.8-bf54f5b324-cb58f916bb.zip/node_modules/react-spinners/",\
+          "packageDependencies": [\
+            ["react-spinners", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:0.13.8"],\
+            ["@types/react", "npm:18.2.18"],\
+            ["@types/react-dom", "npm:18.2.7"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:b528475cbb52bfab135d369503d2f2e08e7a3bfb562e6b61ef5b2ec37752e590bfbcdb7a8eb856bb2a6dfaacbc126276fc53f89e4170ab9becfc814879010c28#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
             "react"\
           ],\
           "linkType": "HARD"\

@@ -43,15 +43,27 @@ export interface MutationTextReponse {
   error?: any
 }
 
+export interface CountryCode {
+  code: string
+  id: string
+  name: string
+}
+
+export interface GetCountryResponse {
+  ok: boolean
+  data: CountryCode[]
+  error?: any
+}
+
 const TranslateApi = {
   queries: {
     getCountryCode: {
       queryKey: ['contry-code'],
       queryFn: async () => {
-        const result = await axios.get(
-          'http://localhost:3000/api/translate/code-list'
+        const result = await axios.get<GetCountryResponse>(
+          '/api/translate/code-list'
         )
-        return result.data
+        return result.data.data
       },
       suspense: true,
     } satisfies QueryMethod,
@@ -65,7 +77,7 @@ const TranslateApi = {
         signal?: AbortSignal
       }) => {
         const result = await axios.get<HistoryTextResponse>(
-          'http://localhost:3000/api/translate/text',
+          '/api/translate/text',
           {
             params: { page: pageParam },
             signal,

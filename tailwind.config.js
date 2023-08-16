@@ -28,6 +28,11 @@ module.exports = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          icon: 'hsl(var(--icon))',
+        },
+        icon: {
+          DEFAULT: 'hsl(var(--icon))',
+          active: 'hsl(var(--icon-active)))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',

@@ -1,13 +1,7 @@
-import AudienceSpeech from '@/components/audience-speech'
-import MySpeech from '@/components/my-speech'
+import SpeechInner from './components/speech-inner'
 
 const page = () => {
-  return (
-    <div className="h-full">
-      <AudienceSpeech />
-      <MySpeech />
-    </div>
-  )
+  return <SpeechInner />
 }
 
 export default page

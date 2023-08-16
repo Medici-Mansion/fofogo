@@ -34,6 +34,22 @@ import ChatText from './chat-text'
 import { VirtuosoHandle } from 'react-virtuoso'
 import { Message } from '@/APIs/translateApi'
 import { v4 as uuid } from 'uuid'
+import UserAvatar from './user-avatar'
+import BotAvatar from './bot-avatar'
+
+// IOS requestIdleCallback 지원 X -> 같은 방식으로 윈도우 객체에 강제주입
+window.requestIdleCallback = (cb) => {
+  var start = Date.now()
+  const timeout = setTimeout(() => {
+    cb({
+      didTimeout: false,
+      timeRemaining: function () {
+        return Math.max(0, 50 - (Date.now() - start))
+      },
+    })
+  }, 1)
+  return timeout as unknown as number
+}
 
 const TextForm = () => {
   const { toast } = useToast()
@@ -57,6 +73,7 @@ const TextForm = () => {
     resolver: zodResolver(TranslateTextValidation.POST),
     defaultValues: {
       from: 'ko',
+      to: 'en',
     },
   })
 
@@ -135,7 +152,7 @@ const TextForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="max-h-44 overflow-y-auto">
-                    {countryData?.data.map((country: any) => (
+                    {countryData?.map((country: any) => (
                       <SelectItem key={country.id} value={country.code}>
                         {country.name}
                       </SelectItem>
@@ -157,9 +174,11 @@ const TextForm = () => {
             itemContent={(_, data) => (
               <div key={data.content}>
                 <ChatText
-                  role={data.role || ''}
                   content={data.content || ''}
                   language={data.language.name || ''}
+                  isMe={data.role === 'user'}
+                  myIcon={<UserAvatar />}
+                  senderIcon={<BotAvatar />}
                 />
               </div>
             )}
@@ -180,15 +199,20 @@ const TextForm = () => {
                   </FormControl>
                   <Button
                     type="submit"
-                    className="absolute right-1 bg-transparent hover:bg-transparent shadow-none"
+                    className="absolute right-1 bg-transparent hover:bg-transparent shadow-none text-icon"
                     disabled={isLoading}
                   >
-                    <LucideIcons.SendHorizonal className="text-white" />
+                    <LucideIcons.SendHorizonal />
                   </Button>
                 </FormItem>
               )}
             />
-            <NavigationPopover select={form.getValues()} />
+            <NavigationPopover
+              select={form.getValues()}
+              onRecordEnd={(result) => {
+                form.setValue('text', result)
+              }}
+            />
           </div>
         </div>
       </motion.form>

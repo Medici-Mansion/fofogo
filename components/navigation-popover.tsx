@@ -9,86 +9,82 @@ import {
 import useVoice from '@/hooks/use-voice'
 import * as LucideIcons from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useQueryClient } from '@tanstack/react-query'
-import useGetHistoryText from '@/hooks/use-history-text'
 import { useToast } from '@/components/ui/use-toast'
-import useTranslateText from '@/hooks/use-translate-text'
+import * as z from 'zod'
+import TranslateTextValidation from '@/validation/translate/text.validation'
+import { ScaleLoader } from 'react-spinners'
+import { useState } from 'react'
 
-export function NavigationPopover({ select }: any) {
-  const { mutate } = useTranslateText()
+interface NavigationPopoverProps {
+  select: z.infer<typeof TranslateTextValidation.POST>
+  onRecordEnd?: (result: string) => void
+}
+
+export function NavigationPopover({
+  select,
+  onRecordEnd,
+}: NavigationPopoverProps) {
+  const [open, setOpen] = useState(false)
   const { toast } = useToast()
-  const { key: historyKey } = useGetHistoryText()
   const router = useRouter()
-  const queryClient = useQueryClient()
-  const recorder = useVoice()
+  const { recorder, isRecording } = useVoice()
 
   const isCheckLangage = Object.keys(select).some((item) => {
     return item === 'to' && select['to'] !== undefined
   })
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={(open) => setOpen(open)}>
       <PopoverTrigger asChild>
         <Button
           variant={'outline'}
-          className="border-none hover:bg-none hover:bg-accent-none"
+          className="border-none hover:bg-none hover:bg-accent-none text-icon hover:text-icon hover:shadow-none shadow-none"
         >
           <LucideIcons.CircleEqual className="w-8 h-8" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-30 relative">
-        <p className="text-sm text-muted-foreground rounded-full absolute right-12 p-2">
+      <PopoverContent className="w-30 relative shadow-none">
+        <p className="text-sm text-icon rounded-full absolute right-12 p-2">
           <LucideIcons.Users
-            className="w-10 h-10 text-[#68cede] border border-primary/10 rounded-full bg-background p-1.5"
+            className="w-10 h-10 text-primary border border-primary/10 rounded-full bg-background p-1.5"
             onClick={() => {
               router.push('/speech')
             }}
           />
         </p>
-        <p className="text-sm text-muted-foreground rounded-full absolute bottom-7 right-0">
-          <LucideIcons.Mic
-            className="w-10 h-10 text-[#68cede] border border-primary/10 rounded-full bg-background p-1.5"
-            onClick={() => {
-              if (!isCheckLangage) {
-                toast({
-                  description: '번역할 국가를 선택해주세요!',
-                  variant: 'warning',
+        <p className="text-sm text-icon rounded-full absolute bottom-7 right-0">
+          {isRecording ? (
+            <ScaleLoader
+              className="w-10 h-10 p-2 text-primary-icon border border-primary/10 rounded-full flex items-center"
+              color="#75efff"
+              width={2}
+              height={5}
+              loading
+              margin={1}
+              radius={1}
+              speedMultiplier={0.7}
+            />
+          ) : (
+            <LucideIcons.Mic
+              className="w-10 h-10 border border-primary/10 rounded-full bg-background p-1.5"
+              onClick={() => {
+                if (!isCheckLangage) {
+                  toast({
+                    description: '번역할 국가를 선택해주세요!',
+                    variant: 'warning',
+                  })
+                  return
+                }
+                recorder.start({
+                  callback(result) {
+                    onRecordEnd && onRecordEnd(result)
+                    setOpen(false)
+                  },
+                  lang: 'ko',
                 })
-                return
-              }
-              recorder.start({
-                callback(result) {
-                  if (result) {
-                    console.log(typeof result)
-                    const mutateParam = {
-                      text: result,
-                      from: select.from,
-                      to: select.to,
-                    }
-
-                    const speech = queryClient.getQueryData(historyKey) as {
-                      data: []
-                    }
-                    queryClient.setQueryData(historyKey, {
-                      ...speech,
-                      data: [
-                        ...speech.data,
-                        {
-                          content: result,
-                          language: select.ko,
-                          role: 'user',
-                          createdAt: new Date(),
-                          id: new Date() + '',
-                        },
-                      ],
-                    })
-                    mutate(mutateParam)
-                  }
-                },
-                lang: 'ko',
-              })
-            }}
-          />
+              }}
+            />
+          )}
         </p>
       </PopoverContent>
     </Popover>

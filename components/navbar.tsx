@@ -45,15 +45,15 @@ export const Navbar = () => {
           'transition-all -translate-y-full'
       )}
     >
-      <div className="flex items-center">
-        <Image
-          src={'/fofogo_symbol.png'}
-          alt="logo"
-          className="rounded-lg"
-          width={30}
-          height={30}
-        />
-        <Link href={'/'}>
+      <Link href={'/'}>
+        <div className="flex items-center">
+          <Image
+            src={'/fofogo_symbol.png'}
+            alt="logo"
+            className="rounded-lg"
+            width={30}
+            height={30}
+          />
           <h1
             className={cn(
               'hidden md:block text-xl md:text-3xl font-bold text-primary ml-3',
@@ -62,8 +62,8 @@ export const Navbar = () => {
           >
             fofogo
           </h1>
-        </Link>
-      </div>
+        </div>
+      </Link>
       <div className="flex items-center gap-x-3">
         <ModeToggle />
         {isLoaded ? <UserButton afterSignOutUrl="/" /> : <>Loading...</>}
