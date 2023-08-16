@@ -76,7 +76,6 @@ const TextForm = () => {
       to: 'en',
     },
   })
-
   const onSubmit = async (textFormValue: Validation<'POST'>) => {
     form.setValue('text', '')
     mutate(textFormValue)
@@ -114,9 +113,11 @@ const TextForm = () => {
 
   useEffect(() => {
     if (Object.keys(form.formState.errors).length) {
+      const b = Object.entries(form.formState.errors)
+
       toast({
         variant: 'warning',
-        description: 'required',
+        description: b[0][1].message,
       })
     }
   }, [form.formState.errors, toast])
@@ -130,13 +131,12 @@ const TextForm = () => {
         initial={{ opacity: 0 }}
         exit={{ opacity: 0 }}
       >
-        <div className="grid grid-cols-2 gap-4 px-2">
+        <div className="flex flex-col h-full">
           <FormField
             name="to"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>to</FormLabel>
                 <Select
                   disabled={isLoading}
                   onValueChange={field.onChange}
@@ -144,7 +144,7 @@ const TextForm = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="bg-background">
+                    <SelectTrigger className="bg-background rounded-none border-none shadow-sm">
                       <SelectValue
                         defaultValue={field.value}
                         placeholder="Select a country"
@@ -163,8 +163,6 @@ const TextForm = () => {
               </FormItem>
             )}
           />
-        </div>
-        <div className="flex flex-col h-full">
           <ChatTexts
             mref={chatRef}
             data={[...chatBoxList, ...messages]}

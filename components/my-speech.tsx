@@ -8,22 +8,21 @@ import { ScrollerProps, Virtuoso, VirtuosoHandle } from 'react-virtuoso'
 import ChatText from './chat-text'
 import UserAvatar from './user-avatar'
 import BotAvatar from './bot-avatar'
-import { useForm } from 'react-hook-form'
+import { ControllerRenderProps } from 'react-hook-form'
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import MicRecorder from './mic-recorder'
+import {
+  SpeechMessage,
+  speechSchame,
+} from '@/app/(speech)/(route)/speech/components/speech-inner'
 interface MySpeechProps {
-  messages: Message[]
-  updateMessage: (message: Message) => void
+  messages: SpeechMessage[]
   codeList?: CountryCode[]
   isLoading: boolean
+  field: ControllerRenderProps<z.infer<typeof speechSchame>, 'me'>
+  onSubmit: (args: { text: string; speechType: 'me' | 'audience' }) => void
 }
-
-const schema = z.object({
-  codeId: z.string({
-    required_error: '??',
-  }),
-})
 
 const Scroller = forwardRef<HTMLDivElement, ScrollerProps>(
   ({ style, ...props }, ref) => {
@@ -65,23 +64,23 @@ const ScrollItem = ({
   )
 }
 
-const MySpeech = ({
-  messages,
-  isLoading,
-  updateMessage,
-  codeList,
-}: MySpeechProps) => {
-  const [selectedCountry, setSelectedCountry] = useState<CountryCode>()
+const MySpeech = ({ messages, codeList, field, onSubmit }: MySpeechProps) => {
   const [open, setOpen] = useState(false)
-  const {} = useForm<z.infer<typeof schema>>()
+  const { onChange, value: selectedCountry } = field
   const chatRef = useRef<VirtuosoHandle>(null)
 
   useEffect(() => {
     const krhCode = codeList?.find((code) => code.code === 'ko')
     if (krhCode) {
-      setSelectedCountry(krhCode)
+      onChange(krhCode)
     }
-  }, [])
+  }, [codeList, onChange])
+
+  useEffect(() => {
+    requestIdleCallback(() => {
+      chatRef.current?.scrollToIndex({ index: 'LAST' })
+    })
+  }, [messages])
   return (
     <div className="flex flex-1 flex-col items-center justify-between">
       <div className="flex flex-1 w-full ">
@@ -96,9 +95,9 @@ const MySpeech = ({
               return (
                 <div>
                   <ChatText
-                    content={data.content || ''}
+                    content={data.text || ''}
                     language={data.language.name || ''}
-                    isMe={data.role === 'user'}
+                    isMe={data.from === 'me' && data.speechType === 'me'}
                     myIcon={<UserAvatar />}
                     senderIcon={<BotAvatar />}
                   />
@@ -121,7 +120,10 @@ const MySpeech = ({
               start({
                 lang: selectedCountry.code,
                 callback(result) {
-                  console.log(result)
+                  onSubmit({
+                    speechType: 'me',
+                    text: result,
+                  })
                 },
               })
             }
@@ -161,7 +163,7 @@ const MySpeech = ({
                   data={data}
                   index={_}
                   selectedCountry={selectedCountry}
-                  onSelect={(selected) => setSelectedCountry(selected)}
+                  onSelect={(selected) => onChange(selected)}
                 />
               )}
             />

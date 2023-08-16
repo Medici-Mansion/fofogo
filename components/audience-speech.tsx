@@ -1,33 +1,29 @@
 'use client'
 
-import * as LucideIcons from 'lucide-react'
 import { CountryCode, Message } from '@/APIs/translateApi'
 import ChatTexts from './chat-texts'
-import { forwardRef, useContext, useEffect, useRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 import { ScrollerProps, Virtuoso, VirtuosoHandle } from 'react-virtuoso'
 import ChatText from './chat-text'
 import UserAvatar from './user-avatar'
 import BotAvatar from './bot-avatar'
-import { useForm } from 'react-hook-form'
+import { ControllerRenderProps } from 'react-hook-form'
 import * as z from 'zod'
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import MicRecorder from './mic-recorder'
-import useTranslateText from '@/hooks/use-translate-text'
-import { speechContext } from '@/app/(speech)/(route)/speech/components/speech-inner'
+import {
+  SpeechMessage,
+  speechSchame,
+} from '@/app/(speech)/(route)/speech/components/speech-inner'
 
 interface AudienceSpeechProps {
-  messages: Message[]
-  updateMessage: (message: Message) => void
+  messages: SpeechMessage[]
   codeList?: CountryCode[]
   isLoading: boolean
+  field: ControllerRenderProps<z.infer<typeof speechSchame>, 'audience'>
+  onSubmit: (args: { text: string; speechType: 'me' | 'audience' }) => void
 }
-
-const schema = z.object({
-  codeId: z.string({
-    required_error: '??',
-  }),
-})
 
 const Scroller = forwardRef<HTMLDivElement, ScrollerProps>(
   ({ style, ...props }, ref) => {
@@ -42,7 +38,6 @@ Scroller.displayName = 'Scroller'
 
 const ScrollItem = ({
   data,
-  index,
   selectedCountry,
   onSelect,
 }: {
@@ -69,21 +64,29 @@ const ScrollItem = ({
   )
 }
 
-const AudienceSpeech = ({ messages, codeList }: AudienceSpeechProps) => {
-  const [selectedCountry, setSelectedCountry] = useState<CountryCode>()
+const AudienceSpeech = ({
+  messages,
+  codeList,
+  field,
+  onSubmit,
+}: AudienceSpeechProps) => {
   const [open, setOpen] = useState(false)
-  const {} = useForm<z.infer<typeof schema>>()
-  const { mutate } = useTranslateText()
   const chatRef = useRef<VirtuosoHandle>(null)
 
-  const test = useContext(speechContext)
-  console.log(test)
+  const { onChange, value: selectedCountry, ref } = field
+
   useEffect(() => {
     const englishCode = codeList!.find((code) => code.code === 'en')
     if (englishCode) {
-      setSelectedCountry(englishCode)
+      onChange(englishCode)
     }
-  }, [])
+  }, [codeList, onChange, onSubmit])
+
+  useEffect(() => {
+    requestIdleCallback(() => {
+      chatRef.current?.scrollToIndex({ index: 'LAST' })
+    })
+  }, [messages])
   return (
     <div className="flex flex-1 flex-col items-center justify-between rotate-180">
       <div className="flex flex-1 w-full ">
@@ -98,9 +101,11 @@ const AudienceSpeech = ({ messages, codeList }: AudienceSpeechProps) => {
               return (
                 <div>
                   <ChatText
-                    content={data.content || ''}
+                    content={data.text || ''}
                     language={data.language.name || ''}
-                    isMe={data.role === 'user'}
+                    isMe={
+                      data.from === 'audience' && data.speechType === 'audience'
+                    }
                     myIcon={<UserAvatar />}
                     senderIcon={<BotAvatar />}
                   />
@@ -123,10 +128,9 @@ const AudienceSpeech = ({ messages, codeList }: AudienceSpeechProps) => {
               start({
                 lang: selectedCountry.code,
                 callback(result) {
-                  mutate({
+                  onSubmit({
+                    speechType: 'audience',
                     text: result,
-                    from: selectedCountry.code,
-                    to: 'ko',
                   })
                 },
               })
@@ -142,6 +146,7 @@ const AudienceSpeech = ({ messages, codeList }: AudienceSpeechProps) => {
         >
           {!open ? (
             <motion.div
+              ref={ref}
               key={selectedCountry?.name}
               layoutId={selectedCountry?.name}
               className="whitespace-nowrap text-center"
@@ -167,7 +172,7 @@ const AudienceSpeech = ({ messages, codeList }: AudienceSpeechProps) => {
                   data={data}
                   index={_}
                   selectedCountry={selectedCountry}
-                  onSelect={(selected) => setSelectedCountry(selected)}
+                  onSelect={(selected) => onChange(selected)}
                 />
               )}
             />
