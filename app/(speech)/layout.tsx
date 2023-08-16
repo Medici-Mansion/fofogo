@@ -4,6 +4,7 @@ export const metadata = {
   ...getDefaultMetadata(),
 }
 
+
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <div className="h-full flex flex-col">
