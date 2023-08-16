@@ -25,6 +25,9 @@ body,
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
 
+    --icon: 30 21 34 100%;
+    --icon-active: 21 100 59 100%;
+
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
 
@@ -42,13 +45,13 @@ body,
   }
 
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 0 0% 10%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 3.9%;
+    --card: 0 0% 10%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 3.9%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 0 0% 98%;
@@ -56,6 +59,9 @@ body,
 
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
+
+    --icon: 0 12 21 100%;
+    --icon-active: 21 100 59 100%;
 
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
@@ -75,6 +81,9 @@ body,
 @layer base {
   * {
     @apply border-border;
+  }
+  html {
+    @apply max-h-[100dvh] sm:max-h-none;
   }
   body {
     @apply bg-background text-foreground;

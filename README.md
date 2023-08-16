@@ -13,6 +13,9 @@
 yarn -v  # current: 3.5.1 not: 1.x.x
 yarn set version berry
 yarn dlx @yarnpkg/sdks vscode
+
+yarn add @yarnpkg/pnpify
+yarn pnpify prisma generate
 ```
 
 ## 브런치 전략
@@ -29,6 +32,7 @@ yarn dlx @yarnpkg/sdks vscode
 ♻️ refactor : 기존 코드를 수정한 코드정리
 🗑️ cleanup : 기존 코드를 수정하지 않은 코드정리
 🚧 chore : 환경설정 및 프로젝트 세팅
+🔖 pull-request : pull-request 요청 시
 
 <type>(<scope>): <subject> - Subject line
 <BLANK LINE> - 줄 바꿈으로 구분한다

@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Language {
+  id      String    @id @default(uuid())
+  code    String    @unique
+  name    String
+  Message Message[]
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  role       Role
+  content    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String
+  language   Language @relation(fields: [languageId], references: [code])
+  languageId String
+}
+
+enum Role {
+  user
+  system
+}

@@ -1,17 +1,10 @@
-import { PropsWithChildren } from 'react'
-import Navbar from "@/components/navbar"
-import TextForm from "@/components/text-form"
-
-
+import Loading from '@/components/loading'
+import { PropsWithChildren, Suspense } from 'react'
 const RootLayout = ({ children }: PropsWithChildren) => {
-
-  const text = "123123"
   return (
-    <div className="h-full flex flex-col">
-      <Navbar />      
-      <TextForm />
-      <main className="h-full">{children}</main>
-    </div>
+    <main className="pt-nav-height sm:pt-0 h-[100dvh] sm:h-full">
+      {children}
+    </main>
   )
 }
 
