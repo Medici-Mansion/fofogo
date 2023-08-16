@@ -7,16 +7,13 @@ export class Recorder {
   private stream?: MediaStream
   private track?: MediaStreamTrack
   private recognitionHistory: string[] = []
-  private static listners: ((state: boolean) => void)[] = []
+  private listners: ((state: boolean) => void)[] = []
 
   public recordingState = false
 
   public static getInstance() {
     if (typeof window === 'undefined') {
       throw new Error('서버 환경에서 사용할 수 없습니다.')
-    }
-    if (Recorder.instance) {
-      return Recorder.instance
     }
     Recorder.instance = new Recorder()
     return Recorder.instance
@@ -39,17 +36,20 @@ export class Recorder {
   }
 
   addListner(stateListner: (state: boolean) => void) {
-    Recorder.listners.push(stateListner)
+    this.listners.push(stateListner)
   }
   getListner() {
-    return Recorder.listners
+    return this.listners
   }
 
   clearListner() {
-    Recorder.listners = []
+    this.listners = []
   }
 
-  async start(options: { callback: (result: string) => void; lang: string }) {
+  start = async (options: {
+    callback: (result: string) => void
+    lang: string
+  }) => {
     if (this.recordingState) {
       return this.stop()
     }
@@ -63,13 +63,12 @@ export class Recorder {
     this.SpeechRecognition.maxAlternatives = 10
     this.SpeechRecognition.start()
     this.recordingState = true
-    Recorder.listners.forEach((listener) => listener(this.recordingState))
+    this.listners.forEach((listener) => listener(this.recordingState))
     this.SpeechRecognition.onresult = (event) => {
       const speechResult = event.results[0][0].transcript
       callback(speechResult)
       this.recognitionHistory.push(speechResult)
     }
-
     this.SpeechRecognition.onaudiostart = (event) => {
       window.addEventListener('click', this.disableClick)
       console.log('SpeechRecognition.onaudiostart')
@@ -96,7 +95,7 @@ export class Recorder {
     this.track?.stop()
     this.recordingState = false
     window.removeEventListener('click', this.disableClick)
-    Recorder.listners.forEach((listener) => listener(this.recordingState))
+    this.listners.forEach((listener) => listener(this.recordingState))
   }
 
   getStream() {

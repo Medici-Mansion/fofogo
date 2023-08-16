@@ -6,14 +6,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import useVoice from '@/hooks/use-voice'
 import * as LucideIcons from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 import * as z from 'zod'
 import TranslateTextValidation from '@/validation/translate/text.validation'
-import { ScaleLoader } from 'react-spinners'
 import { useState } from 'react'
+import MicRecorder from './mic-recorder'
 
 interface NavigationPopoverProps {
   select: z.infer<typeof TranslateTextValidation.POST>
@@ -27,7 +26,6 @@ export function NavigationPopover({
   const [open, setOpen] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
-  const { recorder, isRecording } = useVoice()
 
   const isCheckLangage = Object.keys(select).some((item) => {
     return item === 'to' && select['to'] !== undefined
@@ -44,48 +42,35 @@ export function NavigationPopover({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-30 relative shadow-none">
-        <p className="text-sm text-icon rounded-full absolute right-12 p-2">
+        <div className="text-sm text-icon rounded-full absolute right-12 p-2">
           <LucideIcons.Users
             className="w-10 h-10 text-primary border border-primary/10 rounded-full bg-background p-1.5"
             onClick={() => {
               router.push('/speech')
             }}
           />
-        </p>
-        <p className="text-sm text-icon rounded-full absolute bottom-7 right-0">
-          {isRecording ? (
-            <ScaleLoader
-              className="w-10 h-10 p-2 text-primary-icon border border-primary/10 rounded-full flex items-center"
-              color="#75efff"
-              width={2}
-              height={5}
-              loading
-              margin={1}
-              radius={1}
-              speedMultiplier={0.7}
-            />
-          ) : (
-            <LucideIcons.Mic
-              className="w-10 h-10 border border-primary/10 rounded-full bg-background p-1.5"
-              onClick={() => {
-                if (!isCheckLangage) {
-                  toast({
-                    description: '번역할 국가를 선택해주세요!',
-                    variant: 'warning',
-                  })
-                  return
-                }
-                recorder.start({
-                  callback(result) {
-                    onRecordEnd && onRecordEnd(result)
-                    setOpen(false)
-                  },
-                  lang: 'ko',
+        </div>
+        <div className="text-sm text-icon rounded-full absolute bottom-7 right-0">
+          <MicRecorder
+            className="w-10 h-10 border border-primary/10 rounded-full bg-background p-1.5 flex justify-center items-center"
+            onStartRecording={(start) => {
+              if (!isCheckLangage) {
+                toast({
+                  description: '번역할 국가를 선택해주세요!',
+                  variant: 'warning',
                 })
-              }}
-            />
-          )}
-        </p>
+                return
+              }
+              start({
+                callback(result) {
+                  onRecordEnd && onRecordEnd(result)
+                  setOpen(false)
+                },
+                lang: 'ko',
+              })
+            }}
+          />
+        </div>
       </PopoverContent>
     </Popover>
   )

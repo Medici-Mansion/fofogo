@@ -5,6 +5,7 @@ import type {
   QueryKey,
   UseMutationOptions,
 } from '@tanstack/react-query'
+import { Response } from './common'
 
 type QueryMethod = UseQueryOptions<unknown, unknown, unknown, QueryKey>
 type MutationOptions<
@@ -100,6 +101,16 @@ const TranslateApi = {
         return result.data
       },
     } as MutationOptions<MutationTextReponse, any, Validation<'POST'>>,
+    translateSingle: {
+      mutationKey: ['translate-single'],
+      mutationFn: async (param) => {
+        const result = await axios.post<Response<string>>(
+          '/api/translate/text/single',
+          param
+        )
+        return result.data
+      },
+    } as MutationOptions<Response<string>, any, Validation<'POST'>>,
   },
 }
 
