@@ -1,4 +1,8 @@
 import { PropsWithChildren } from 'react'
+import { getDefaultMetadata } from '@/lib/headUtils'
+export const metadata = {
+  ...getDefaultMetadata(),
+}
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (

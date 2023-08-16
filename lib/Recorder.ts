@@ -7,15 +7,18 @@ export class Recorder {
   private stream?: MediaStream
   private track?: MediaStreamTrack
   private recognitionHistory: string[] = []
+  private static listners: ((state: boolean) => void)[] = []
+
+  public recordingState = false
 
   public static getInstance() {
-    console.log(typeof window)
     if (typeof window === 'undefined') {
       throw new Error('서버 환경에서 사용할 수 없습니다.')
     }
-    if (!Recorder.instance) {
-      Recorder.instance = new Recorder()
+    if (Recorder.instance) {
+      return Recorder.instance
     }
+    Recorder.instance = new Recorder()
     return Recorder.instance
   }
 
@@ -35,7 +38,21 @@ export class Recorder {
     }
   }
 
+  addListner(stateListner: (state: boolean) => void) {
+    Recorder.listners.push(stateListner)
+  }
+  getListner() {
+    return Recorder.listners
+  }
+
+  clearListner() {
+    Recorder.listners = []
+  }
+
   async start(options: { callback: (result: string) => void; lang: string }) {
+    if (this.recordingState) {
+      return this.stop()
+    }
     if (!this.permission || !this.track) {
       await this.requestPermission()
     }
@@ -45,6 +62,8 @@ export class Recorder {
     this.SpeechRecognition.continuous = false
     this.SpeechRecognition.maxAlternatives = 10
     this.SpeechRecognition.start()
+    this.recordingState = true
+    Recorder.listners.forEach((listener) => listener(this.recordingState))
     this.SpeechRecognition.onresult = (event) => {
       const speechResult = event.results[0][0].transcript
       callback(speechResult)
@@ -75,11 +94,17 @@ export class Recorder {
 
   stop() {
     this.track?.stop()
+    this.recordingState = false
     window.removeEventListener('click', this.disableClick)
+    Recorder.listners.forEach((listener) => listener(this.recordingState))
   }
 
   getStream() {
     return this.stream
+  }
+
+  getRecognitionHistory() {
+    return this.recognitionHistory
   }
 
   private disableClick = (event: MouseEvent) => {

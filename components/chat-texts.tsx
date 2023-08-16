@@ -2,6 +2,7 @@
 
 import {
   IndexLocationWithAlign,
+  ItemContent,
   Virtuoso,
   VirtuosoHandle,
   VirtuosoProps,
@@ -14,13 +15,13 @@ interface ChatTextsProps<T, C = any> extends VirtuosoProps<T, C> {
   initialTopMostItemIndex?: number | IndexLocationWithAlign
   startReached?: (index: number) => void
   firstItemIndex?: number
+  className?: string
 }
 function ChatTextsInner<T>(
   {
     data,
     className,
     firstItemIndex,
-    isLoading,
     initialTopMostItemIndex,
     itemContent,
     startReached,
@@ -39,14 +40,14 @@ function ChatTextsInner<T>(
     />
   )
 }
-type ChatTextsWithRefProps<T> = ChatTextsProps<T> & {
+interface ChatTextsWithRefProps<T = unknown> extends ChatTextsProps<T> {
   mref?: Ref<VirtuosoHandle>
 }
 
 const ChatTextsWithRef = forwardRef(ChatTextsInner)
-export default function ChatTexts<T extends unknown>({
-  mref,
-  ...props
-}: ChatTextsWithRefProps<T>) {
+const ChatTexts = <T,>({ mref, ...props }: ChatTextsWithRefProps<T>) => {
+  // @ts-ignore
   return <ChatTextsWithRef {...props} ref={mref} />
 }
+
+export default ChatTexts

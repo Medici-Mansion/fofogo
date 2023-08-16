@@ -68,7 +68,7 @@ const ChatText = ({
           )}
         >
           {content}
-          {isMe && (
+          {!isMe && (
             <Button
               onClick={(e) => {
                 onCopy(e)

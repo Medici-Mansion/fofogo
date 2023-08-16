@@ -43,13 +43,27 @@ export interface MutationTextReponse {
   error?: any
 }
 
+export interface CountryCode {
+  code: string
+  id: string
+  name: string
+}
+
+export interface GetCountryResponse {
+  ok: boolean
+  data: CountryCode[]
+  error?: any
+}
+
 const TranslateApi = {
   queries: {
     getCountryCode: {
       queryKey: ['contry-code'],
       queryFn: async () => {
-        const result = await axios.get('/api/translate/code-list')
-        return result.data
+        const result = await axios.get<GetCountryResponse>(
+          '/api/translate/code-list'
+        )
+        return result.data.data
       },
       suspense: true,
     } satisfies QueryMethod,

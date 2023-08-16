@@ -152,7 +152,7 @@ const TextForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="max-h-44 overflow-y-auto">
-                    {countryData?.data.map((country: any) => (
+                    {countryData?.map((country: any) => (
                       <SelectItem key={country.id} value={country.code}>
                         {country.name}
                       </SelectItem>
@@ -199,15 +199,20 @@ const TextForm = () => {
                   </FormControl>
                   <Button
                     type="submit"
-                    className="absolute right-1 bg-transparent hover:bg-transparent shadow-none"
+                    className="absolute right-1 bg-transparent hover:bg-transparent shadow-none text-icon"
                     disabled={isLoading}
                   >
-                    <LucideIcons.SendHorizonal className="text-foreground" />
+                    <LucideIcons.SendHorizonal />
                   </Button>
                 </FormItem>
               )}
             />
-            <NavigationPopover select={form.getValues()} />
+            <NavigationPopover
+              select={form.getValues()}
+              onRecordEnd={(result) => {
+                form.setValue('text', result)
+              }}
+            />
           </div>
         </div>
       </motion.form>
